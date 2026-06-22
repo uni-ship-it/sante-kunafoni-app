@@ -1,7 +1,8 @@
 package groupe3.example.santekunafoniapp.controller;
 
 import groupe3.example.santekunafoniapp.DTO.SymptomeMaladieDTO;
-import groupe3.example.santekunafoniapp.services.serviceInterface.SymptomeMaladieService;
+import groupe3.example.santekunafoniapp.services.serviceImplementation.SymptomeMaladieServiceImpl;
+import groupe3.example.santekunafoniapp.services.serviceInterface.SymptomeMaladieServiceInterface;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +12,9 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class SymptomeMaladieController {
 
-    private final SymptomeMaladieService service;
+    private final SymptomeMaladieServiceImpl service;
 
-    public SymptomeMaladieController(SymptomeMaladieService service) {
+    public SymptomeMaladieController(SymptomeMaladieServiceImpl service) {
         this.service = service;
     }
 
@@ -33,12 +34,12 @@ public class SymptomeMaladieController {
     }
 
     @GetMapping("/symptome/{idSymptome}")
-    public List<SymptomeMaladieDTO> getBySymptome(@PathVariable Long idSymptome) {
+    public List<SymptomeMaladieDTO> getBySymptome(@PathVariable Integer idSymptome) {
         return service.getBySymptome(idSymptome);
     }
 
     @DeleteMapping("/{idSymptome}/{idMaladie}")
     public void supprimer(@PathVariable Long idSymptome, @PathVariable Integer idMaladie) {
-        service.supprimer(idSymptome, idMaladie);
+        service.supprimer(idMaladie, idMaladie);
     }
 }

@@ -31,4 +31,24 @@ public class Maladie {
 
     @Column(name = "date_declaration")
     private LocalDate dateDeclaration;
+
+    public void setDescription(Object description) {
+
+    }
+
+    public void setDateDeclaration(Object dateDeclaration) {
+
+    }
+
+    public void setNom(Object nom) {
+
+    }
+
+    public Object getDateDeclaration() {
+        return null;
+    }
+
+    public Object getDescription() {
+            return null;
+    }
 }

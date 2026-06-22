@@ -12,16 +12,20 @@ import lombok.*;
 @Builder
 public class SymptomeMaladie {
 
+
     @EmbeddedId
     private SymptomeMaladieId id;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("idSymptome")
     @JoinColumn(name = "idSymptome", nullable = false)
     private Symptome symptome;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("idMaladie")
     @JoinColumn(name = "id_maladie", nullable = false)
     private Maladie maladie;
+
 }

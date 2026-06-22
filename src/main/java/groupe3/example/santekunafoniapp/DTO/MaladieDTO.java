@@ -9,4 +9,16 @@ public class MaladieDTO {
     private String nom;
     private String description;
     private LocalDate dateDeclaration;
+
+    public Object getDescription() {
+            return null;
+    }
+
+    public Object getDateDeclaration() {
+                return null;
+    }
+
+    public Object getNom() {
+            return null;
+    }
 }

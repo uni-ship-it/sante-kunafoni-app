@@ -8,13 +8,15 @@ import groupe3.example.santekunafoniapp.Entity.SymptomeMaladieId;
 import groupe3.example.santekunafoniapp.Repository.MaladieRepository;
 import groupe3.example.santekunafoniapp.Repository.SymptomeMaladieRepository;
 import groupe3.example.santekunafoniapp.Repository.SymptomeRepository;
+import groupe3.example.santekunafoniapp.services.serviceInterface.SymptomeMaladieServiceInterface;
+import lombok.Builder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Builder
 @Service
-public class SymptomeMaladieServiceImpl implements SymptomeMaladieService {
+public class SymptomeMaladieServiceImpl implements SymptomeMaladieServiceInterface {
 
     private final SymptomeMaladieRepository symptomeMaladieRepository;
     private final SymptomeRepository symptomeRepository;
@@ -48,8 +50,7 @@ public class SymptomeMaladieServiceImpl implements SymptomeMaladieService {
                 .maladie(maladie)
                 .build();
 
-        SymptomeMaladie saved = symptomeMaladieRepository.save(lien);
-        return toDTO(saved);
+        return toDTO(symptomeMaladieRepository.save(lien));
     }
 
     @Override
@@ -70,7 +71,7 @@ public class SymptomeMaladieServiceImpl implements SymptomeMaladieService {
 
     @Override
     public List<SymptomeMaladieDTO> getBySymptome(Integer idSymptome) {
-        return symptomeMaladieRepository.findBySymptome_IdSymptome(idSymptome)
+        return symptomeMaladieRepository.findBySymptome_IdSymptome(Long.valueOf(idSymptome))
                 .stream()
                 .map(this::toDTO)
                 .collect(Collectors.toList());

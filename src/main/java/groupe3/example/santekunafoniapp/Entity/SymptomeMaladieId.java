@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
+
 @Embeddable
 @Getter
 @Setter
@@ -12,6 +13,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class SymptomeMaladieId implements Serializable {
 
-    private Integer idSymptome;
+
+    private Long idSymptome;
+
+
     private Integer idMaladie;
+
 }
