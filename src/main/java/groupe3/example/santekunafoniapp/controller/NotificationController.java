@@ -1,6 +1,6 @@
 package groupe3.example.santekunafoniapp.controller;
 import groupe3.example.santekunafoniapp.Entity.Notification;
-import groupe3.example.santekunafoniapp.services.NotificationService;
+import groupe3.example.santekunafoniapp.services.NotificationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
     public class NotificationController {
 
         @Autowired
-        private NotificationService service;
+        private NotificationServiceInterface service;
 
         @PostMapping
         public Notification creerNotification(@RequestBody Notification notif) {
@@ -26,3 +26,4 @@ import java.util.List;
             service.marquerCommeLue(id);
         }
     }
+
