@@ -3,7 +3,7 @@ package groupe3.example.santekunafoniapp.controller;
 
 
 import groupe3.example.santekunafoniapp.Entity.AgentSante;
-import groupe3.example.santekunafoniapp.services.AgentSanteService;
+import groupe3.example.santekunafoniapp.services.serviceImplementation.AgentSanteService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
