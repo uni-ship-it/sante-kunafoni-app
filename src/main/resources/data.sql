@@ -87,17 +87,29 @@ CREATE TABLE symptome (
 );
 
 CREATE TABLE symptome_patient (
-                                  idSymptome INT NOT NULL,
+                                  idSymptome BIGINT NOT NULL,
                                   idUtilisateur INT NOT NULL,
-                                  PRIMARY KEY (idSymptome, idUtilisateur),
-                                  FOREIGN KEY (idUtilisateur) REFERENCES patient(idUtilisateur)
+
+                                  PRIMARY KEY(idSymptome,idUtilisateur),
+
+                                  FOREIGN KEY(idSymptome)
+                                      REFERENCES symptome(idSymptome),
+
+                                  FOREIGN KEY(idUtilisateur)
+                                      REFERENCES patient(idUtilisateur)
 );
 
 CREATE TABLE symptome_maladie (
-                                  idSymptome INT NOT NULL,
+                                  idSymptome BIGINT NOT NULL,
                                   id_maladie INT NOT NULL,
-                                  PRIMARY KEY (idSymptome, id_maladie),
-                                  FOREIGN KEY (id_maladie) REFERENCES maladie(id_maladie)
+
+                                  PRIMARY KEY(idSymptome,id_maladie),
+
+                                  FOREIGN KEY(idSymptome)
+                                      REFERENCES symptome(idSymptome),
+
+                                  FOREIGN KEY(id_maladie)
+                                      REFERENCES maladie(id_maladie)
 );
 
 ALTER TABLE patient ADD COLUMN periode Date;

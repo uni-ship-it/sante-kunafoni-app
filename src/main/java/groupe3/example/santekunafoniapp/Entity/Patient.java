@@ -10,9 +10,7 @@ import java.util.Date;
 @Entity
 @Data
 @Table(name="patient")
-public class Patient {
-    @Id
-    private int idUtilisateur;
+public class Patient extends Utilisateur {
     private String localite;
     private int age;
     private String etat;
