@@ -1,7 +1,7 @@
 package groupe3.example.santekunafoniapp.Repository;
 
-import groupe3.example.santekunafoniapp.Entity.patient;
+import groupe3.example.santekunafoniapp.Entity.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PatientRepository extends JpaRepository<patient, Integer> {
+public interface PatientRepository extends JpaRepository<Patient, Integer> {
 }
