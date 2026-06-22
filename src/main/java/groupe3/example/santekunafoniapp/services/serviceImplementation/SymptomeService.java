@@ -1,4 +1,4 @@
-package groupe3.example.santekunafoniapp.services;
+package groupe3.example.santekunafoniapp.services.serviceImplementation;
 
 import groupe3.example.santekunafoniapp.Repository.SymptomeRepository;
 import org.springframework.stereotype.Service;
