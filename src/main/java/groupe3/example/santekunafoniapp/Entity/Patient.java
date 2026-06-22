@@ -11,8 +11,6 @@ import java.util.Date;
 @Data
 @Table(name="patient")
 public class Patient extends Utilisateur {
-    @Id
-    private int idUtilisateur;
     private String localite;
     private int age;
     private String etat;
