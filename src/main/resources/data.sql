@@ -99,3 +99,8 @@ CREATE TABLE symptome_maladie (
                                   PRIMARY KEY (idSymptome, id_maladie),
                                   FOREIGN KEY (id_maladie) REFERENCES maladie(id_maladie)
 );
+
+ALTER TABLE patient ADD COLUMN periode Date;
+ALTER TABLE patient RENAME COLUMN adresse To localite;
+ALTER TABLE maladie_patient DROP COLUMN periode;
+ALTER TABLE maladie_patient DROP COLUMN localite;
