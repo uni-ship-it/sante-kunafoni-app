@@ -25,7 +25,7 @@ public class AdministrateurController {
     }
     @GetMapping("/{id}")
     public UtilisateurDTO afficherParId(@PathVariable Long id){
-        return administrateurServiceInterface.afficherUtilisateurParID(id);
+        return administrateurServiceInterface.afficherUtilisateurParId(id);
     }
     @PutMapping("/{id}")
     public UtilisateurDTO modifier(@PathVariable Long id ,@RequestBody UtilisateurDTO dto){
