@@ -1,4 +1,4 @@
-package groupe3.example.santekunafoniapp.entity;
+package groupe3.example.santekunafoniapp.Entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
