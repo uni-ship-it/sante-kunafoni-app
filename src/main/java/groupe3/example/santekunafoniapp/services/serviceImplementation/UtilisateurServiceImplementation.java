@@ -1,5 +1,6 @@
 package groupe3.example.santekunafoniapp.services.serviceImplementation;
 
+import groupe3.example.santekunafoniapp.DTO.UtilisateurDTO;
 import groupe3.example.santekunafoniapp.Entity.Utilisateur;
 import groupe3.example.santekunafoniapp.repository.UtilisateurRepository;
 import groupe3.example.santekunafoniapp.services.serviceInterface.UtilisateurServiceInterface;
@@ -22,9 +23,19 @@ public class UtilisateurServiceImplementation implements UtilisateurServiceInter
     }
 
     @Override
-    public Utilisateur addUtilisateur(Utilisateur utilisateur) {
-        return utilisateurRepository.save(utilisateur);
+    public void addUtilisateur(UtilisateurDTO uDTO) {
+
+        Utilisateur utilisateur = new Utilisateur();
+
+        utilisateur.setNom(uDTO.getNom());
+        utilisateur.setPrenom(uDTO.getPrenom());
+        utilisateur.setTel(uDTO.getTel());
+        utilisateur.setMotpass(uDTO.getMotPass());
+        utilisateur.setRole(uDTO.getRole());
+
+        utilisateurRepository.save(utilisateur);
     }
+
 
     @Override
     public Optional<Utilisateur> getUtilisateurById(Long id) {
@@ -32,21 +43,23 @@ public class UtilisateurServiceImplementation implements UtilisateurServiceInter
     }
 
     @Override
-    public void updateUtilisateur(Long id, Utilisateur utilisateur) {
+    public void updateUtilisateur(Long id, UtilisateurDTO uDTO) {
+
         Optional<Utilisateur> existingUtilisateur = utilisateurRepository.findById(id);
 
         if (existingUtilisateur.isPresent()){
             Utilisateur addingUtilisateur = existingUtilisateur.get();
 
-            addingUtilisateur.setNom(utilisateur.getNom());
-            addingUtilisateur.setPrenom(utilisateur.getPrenom());
-            addingUtilisateur.setTel(utilisateur.getTel());
-            addingUtilisateur.setMotpass(utilisateur.getMotpass());
-            addingUtilisateur.setRole(utilisateur.getRole());
+            addingUtilisateur.setNom(uDTO.getNom());
+            addingUtilisateur.setPrenom(uDTO.getPrenom());
+            addingUtilisateur.setTel(uDTO.getTel());
+            addingUtilisateur.setMotpass(uDTO.getMotPass());
+            addingUtilisateur.setRole(uDTO.getRole());
 
             utilisateurRepository.save(addingUtilisateur);
         }
     }
+
 
     @Override
     public void deleteUtilisateur(Long id) {
