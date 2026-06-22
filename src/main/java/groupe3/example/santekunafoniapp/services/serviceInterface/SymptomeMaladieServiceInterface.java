@@ -4,7 +4,7 @@ import groupe3.example.santekunafoniapp.DTO.SymptomeMaladieDTO;
 
 import java.util.List;
 
-public interface SymptomeMaladieServiceImpl{
+public interface SymptomeMaladieServiceInterface {
     SymptomeMaladieDTO ajouter(SymptomeMaladieDTO dto);
     List<SymptomeMaladieDTO> getAll();
     List<SymptomeMaladieDTO> getByMaladie(Integer idMaladie);
