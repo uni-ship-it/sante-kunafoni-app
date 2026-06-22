@@ -10,6 +10,7 @@ import groupe3.example.santekunafoniapp.Entity.Role;
 @Entity
 @Data
 @Table(name = "utilisateur")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
