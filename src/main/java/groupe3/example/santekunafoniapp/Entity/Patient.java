@@ -5,13 +5,13 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-
 import java.util.Date;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false) // Ajout de cette ligne
 @Table(name="patient")
-@EqualsAndHashCode(callSuper = true)
+
 public class Patient extends Utilisateur {
     private String localite;
     private Long age;
