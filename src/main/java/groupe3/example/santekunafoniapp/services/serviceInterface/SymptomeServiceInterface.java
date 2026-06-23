@@ -8,6 +8,6 @@ public interface SymptomeServiceInterface {
    List<Symptome>getAllSymptome();
    Symptome getSymptomeById(Long id);
    Symptome createSymptome(Symptome symptome);
-   Symptome upadateSymptomeById(Long id, Symptome symptome);
+   Symptome updateSymptomeById(Long id, Symptome symptome);
    void deleteSymptomeById(Long id);
 }

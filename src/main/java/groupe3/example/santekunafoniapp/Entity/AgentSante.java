@@ -1,41 +1,28 @@
 package groupe3.example.santekunafoniapp.Entity;
 
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "agent_sante")
-public class AgentSante {
-
-    @Id
-    @Column(name = "idUtilisateur")
-    private Long idUtilisateur;
+@PrimaryKeyJoinColumn(name = "idUtilisateur")
+public class AgentSante extends Utilisateur {
 
     private String specialite;
 
     private String centre;
 
+    @Column(unique = true)
     private String email;
 
     public AgentSante() {
     }
 
-    public AgentSante(Long idUtilisateur,
-                      String specialite,
+    public AgentSante(String specialite,
                       String centre,
                       String email) {
-        this.idUtilisateur = idUtilisateur;
         this.specialite = specialite;
         this.centre = centre;
         this.email = email;
-    }
-
-    public Long getIdUtilisateur() {
-        return idUtilisateur;
-    }
-
-    public void setIdUtilisateur(Long idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
     }
 
     public String getSpecialite() {

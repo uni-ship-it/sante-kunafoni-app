@@ -1,9 +1,8 @@
 package groupe3.example.santekunafoniapp.controller;
 
+import groupe3.example.santekunafoniapp.Entity.Symptome;
 import groupe3.example.santekunafoniapp.services.serviceInterface.SymptomeServiceInterface;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +17,29 @@ public class SymptomeController {
     }
     @GetMapping
     public List<Symptome> getAll(){
-        return service.getAllSymptomes();
+        return service.getAllSymptome();
     }
 
+    @GetMapping("/{id}")
+    public Symptome getById(@PathVariable Long id){
+        return service.getSymptomeById(id);
+    }
+
+    @PostMapping
+    public Symptome createSymptome(@RequestBody Symptome symptome){
+        return service.createSymptome(symptome);
+
+    }
+
+    @PutMapping("/{id}")
+    public Symptome updateById(@PathVariable  Long id, @RequestBody Symptome symptome) {
+        return service.updateSymptomeById(id, symptome);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id){
+//        return service.deleteSymptomeById(id);
+    }
 }
+
+
