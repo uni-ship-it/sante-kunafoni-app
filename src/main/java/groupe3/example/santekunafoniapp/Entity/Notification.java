@@ -20,6 +20,6 @@ import java.time.LocalDateTime;
 
         @ManyToOne
         @JoinColumn(name = "utilisateur_id")
-        private groupe3.example.santekunafoniapp.entity.Utilisateur utilisateur;
+        private groupe3.example.santekunafoniapp.Entity.Utilisateur utilisateur;
     }
 

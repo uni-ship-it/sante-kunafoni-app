@@ -22,6 +22,6 @@ public class SymptomeMaladie {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("idMaladie")
-    @JoinColumn(name = "id_maladie", nullable = false)
+    @JoinColumn(name = "idMaladie", nullable = false)
     private Maladie maladie;
 }

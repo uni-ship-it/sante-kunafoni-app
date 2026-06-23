@@ -3,9 +3,9 @@ package groupe3.example.santekunafoniapp.Entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.management.Notification;
 import java.util.List;
 import groupe3.example.santekunafoniapp.Entity.Role;
+import groupe3.example.santekunafoniapp.Entity.Notification;
 
 @Entity
 @Data
@@ -36,6 +36,6 @@ public class Utilisateur {
         this.role = role;
     }
 
-    @OneToMany
-    List<Notification> notifications;
+    //@OneToMany
+    //List<Notification> notifications;
 }

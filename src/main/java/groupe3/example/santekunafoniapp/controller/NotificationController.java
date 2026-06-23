@@ -18,7 +18,7 @@ import java.util.List;
 
         @GetMapping("/utilisateur/{userId}")
         public List<Notification> getByUtilisateur(@PathVariable Long userId) {
-            return service.findByUtilisateurId(userId);
+            return service.getNotificationsByUtilisateur(userId);
         }
 
         @PatchMapping("/{id}/read")

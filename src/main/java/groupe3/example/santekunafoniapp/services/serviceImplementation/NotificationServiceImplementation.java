@@ -1,15 +1,17 @@
 package groupe3.example.santekunafoniapp.services.serviceImplementation;
 
-import groupe3.example.santekounafoniapp.model.Notification;
-import groupe3.example.santekounafoniapp.repository.NotificationRepository;
-import groupe3.example.santekounafoniapp.services.serviceInterface.NotificationService;
+import groupe3.example.santekunafoniapp.Entity.Notification;
+import groupe3.example.santekunafoniapp.Repository.NotificationRepository;
+import groupe3.example.santekunafoniapp.services.serviceInterface.NotificationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class NotificationServiceImplementation implements NotificationService {
+public class NotificationServiceImplementation implements NotificationServiceInterface {
 
     @Autowired
     private NotificationRepository repository;
@@ -29,7 +31,9 @@ public class NotificationServiceImplementation implements NotificationService {
     }
 
     @Override
-    public List<Notification> getNotificationsByUtilisateur(Long userId) {
-        return repository.findByUtilisateurId(userId);
+    public List<Notification> getNotificationsByUtilisateur(Long userId) { // -> @RequestBody SUPPRIMÉ
+//        return repository.findById(userId); // -> Utilisation de la nouvelle méthode personnalisée
+        return null;
     }
+
 }

@@ -3,6 +3,7 @@ package groupe3.example.santekunafoniapp.controller;
 import groupe3.example.santekunafoniapp.DTO.UtilisateurDTO;
 import groupe3.example.santekunafoniapp.Repository.AdministrateurRepository;
 import groupe3.example.santekunafoniapp.services.serviceInterface.AdministrateurServiceInterface;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +12,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/administrateurs")
 public class AdministrateurController {
+    @Autowired
     private final AdministrateurServiceInterface administrateurServiceInterface;
-    public AdministrateurController(AdministrateurServiceInterface administrateurServiceInterface){
-        this.administrateurServiceInterface=administrateurServiceInterface;
+
+    public AdministrateurController(AdministrateurServiceInterface administrateurServiceInterface) {
+        this.administrateurServiceInterface = administrateurServiceInterface;
     }
+
     @PostMapping
     public UtilisateurDTO ajouter(@RequestBody UtilisateurDTO dto){
         return administrateurServiceInterface.ajouterUtilisateur(dto);
@@ -25,7 +29,7 @@ public class AdministrateurController {
     }
     @GetMapping("/{id}")
     public UtilisateurDTO afficherParId(@PathVariable Long id){
-        return administrateurServiceInterface.afficherUtilisateurParID(id);
+        return administrateurServiceInterface.afficherUtilisateurParId(id);
     }
     @PutMapping("/{id}")
     public UtilisateurDTO modifier(@PathVariable Long id ,@RequestBody UtilisateurDTO dto){

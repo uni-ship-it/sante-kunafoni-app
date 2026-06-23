@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 
-public abstract class AdministrateurServiceImplementation implements AdministrateurServiceInterface {
+public class AdministrateurServiceImplementation implements AdministrateurServiceInterface {
     public final AdministrateurRepository administrateurRepository;
     public AdministrateurServiceImplementation(AdministrateurRepository administrateurRepository){
         this.administrateurRepository=administrateurRepository;
