@@ -1,5 +1,8 @@
 package groupe3.example.santekunafoniapp.services.serviceImplementation;
 
+import groupe3.example.santekunafoniapp.Entity.Patient;
+import groupe3.example.santekunafoniapp.services.serviceInterface.SymptomeServiceInterface;
+import org.springframework.stereotype.Service;
 import groupe3.example.santekunafoniapp.Entity.Symptome;
 import groupe3.example.santekunafoniapp.Repository.SymptomeRepository;
 import groupe3.example.santekunafoniapp.services.serviceInterface.SymptomeServiceInterface;
@@ -16,16 +19,13 @@ public class SymptomeServiceImplementation implements SymptomeServiceInterface {
 
     @Override
     public List<Symptome> getAllSymptome() {
-        return repository.findAll()
-                .orElseThrow(() ->
-                    new RuntimeException("Liste non disponible"));
+        return repository.findAll();
     }
 
     @Override
     public Symptome getSymptomeById(Long id) {
-        return repository.findById()
-                .orElseThrow(() ->
-                        new RuntimeException("Symptôme introuvable"));
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Symptôme introuvable"));
     }
 
     @Override
@@ -34,12 +34,16 @@ public class SymptomeServiceImplementation implements SymptomeServiceInterface {
     }
 
     @Override
-    public Symptome upadateSymptomeById(Long id, Symptome symptome) {
-        return repository.save(symptome, id);
+    public Symptome updateSymptomeById(Long id, Symptome symptome) {
+        Symptome ancien=repository.findById(id)
+        .orElseThrow(()-> new RuntimeException("Symptôme introuvable"));
+        ancien.setNom(symptome.getNom());
+        ancien.setDescription(symptome.getDescription());
+        return repository.save(ancien);
     }
 
     @Override
     public void deleteSymptomeById(Long id) {
-    repository.deleteById(id);
+        repository. deleteById(id);
     }
 }
