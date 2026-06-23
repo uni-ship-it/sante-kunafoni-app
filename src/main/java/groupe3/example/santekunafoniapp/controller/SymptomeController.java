@@ -17,12 +17,12 @@ public class SymptomeController {
     }
     @GetMapping
     public List<Symptome> getAll(){
-        return service.getAllSymptomes();
+        return service.getAllSymptome();
     }
 
     @GetMapping("/{id}")
     public Symptome getById(@PathVariable Long id){
-        return service.getById(id);
+        return service.getSymptomeById(id);
     }
 
     @PostMapping
@@ -33,12 +33,12 @@ public class SymptomeController {
 
     @PutMapping("/{id}")
     public Symptome updateById(@PathVariable  Long id, @RequestBody Symptome symptome) {
-        return service.updateById(id, symptome);
+        return service.updateSymptomeById(id, symptome);
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id){
-        return service.deleteById (id);
+//        return service.deleteSymptomeById(id);
     }
 }
 

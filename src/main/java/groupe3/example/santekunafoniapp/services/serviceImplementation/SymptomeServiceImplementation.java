@@ -9,6 +9,7 @@ import groupe3.example.santekunafoniapp.services.serviceInterface.SymptomeServic
 
 import java.util.List;
 
+@Service
 public class SymptomeServiceImplementation implements SymptomeServiceInterface {
 
     private final SymptomeRepository repository;
@@ -44,6 +45,6 @@ public class SymptomeServiceImplementation implements SymptomeServiceInterface {
 
     @Override
     public void deleteSymptomeById(Long id) {
-        repository. deleteById(id);
+        repository.deleteById(id);
     }
 }

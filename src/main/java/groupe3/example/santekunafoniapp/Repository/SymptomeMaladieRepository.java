@@ -8,9 +8,7 @@ import java.util.List;
 
 public interface SymptomeMaladieRepository extends JpaRepository<SymptomeMaladie, SymptomeMaladieId> {
 
-    List<SymptomeMaladie> findByMaladie_IdMaladie(Integer idMaladie);
-
-    List<SymptomeMaladie> findBySymptome_IdSymptome(Long idSymptome);
-
-    boolean existsById_IdSymptomeAndId_IdMaladie(Long idSymptome, Integer idMaladie);
+    //List<SymptomeMaladie> findByMaladie_IdMaladie(Integer idMaladie);
+    //List<SymptomeMaladie> findBySymptome_IdSymptome(Long idSymptome);
+    //boolean existsById_IdSymptomeAndId_IdMaladie(Long idSymptome, Integer idMaladie);
 }

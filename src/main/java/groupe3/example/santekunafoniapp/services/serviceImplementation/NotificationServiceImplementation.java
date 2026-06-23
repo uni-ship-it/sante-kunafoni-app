@@ -5,6 +5,7 @@ import groupe3.example.santekunafoniapp.Repository.NotificationRepository;
 import groupe3.example.santekunafoniapp.services.serviceInterface.NotificationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +23,16 @@ public class NotificationServiceImplementation implements NotificationServiceInt
     }
 
     @Override
-    public List<Notification> getAllNotifications() {
-        return repository.findAll();
+    public void marquerCommeLue(Long id) {
+        Notification notif = repository.findById(id).orElseThrow(() -> new RuntimeException("Notification non trouvée"));
+        notif.setLue(true);
+        repository.save(notif);
     }
+
+    @Override
+    public List<Notification> getNotificationsByUtilisateur(Long userId) { // -> @RequestBody SUPPRIMÉ
+//        return repository.findById(userId); // -> Utilisation de la nouvelle méthode personnalisée
+        return null;
+    }
+
 }

@@ -9,7 +9,7 @@ public interface AdministrateurServiceInterface {
     UtilisateurDTO modifierUtilisateur(Long id,UtilisateurDTO dto);
     void supprimerUtilisateur(Long id);
     List<UtilisateurDTO>afficherUtilisateurs();
-    UtilisateurDTO afficherUtilisateurParID(Long id);
+    //UtilisateurDTO afficherUtilisateurParID(Long id);
 
     UtilisateurDTO afficherUtilisateurParId(Long id);
 }

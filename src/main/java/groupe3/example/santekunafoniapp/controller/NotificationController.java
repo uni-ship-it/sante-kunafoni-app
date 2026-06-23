@@ -11,8 +11,10 @@ import java.util.List;
 @RequestMapping("/api/notification")
 public class NotificationController {
 
-    @Autowired
-    private NotificationServiceInterface service;
+        @GetMapping("/utilisateur/{userId}")
+        public List<Notification> getByUtilisateur(@PathVariable Long userId) {
+            return service.getNotificationsByUtilisateur(userId);
+        }
 
     @PostMapping
     public Notification envoyerNotification(@RequestBody Notification notif) {
