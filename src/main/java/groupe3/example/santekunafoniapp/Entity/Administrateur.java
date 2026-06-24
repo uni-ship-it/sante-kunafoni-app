@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
 @Table(name = "Administrateur")
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Administrateur extends Utilisateur{
+public class Administrateur {
     private String email;
     public Administrateur(){}
 
