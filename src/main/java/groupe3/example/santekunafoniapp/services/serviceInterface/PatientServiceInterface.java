@@ -7,11 +7,11 @@ import java.util.List;
 public interface PatientServiceInterface {
     Patient ajouterPatient(Patient patient);
 
-    Patient modifierPatient(int id, Patient patient);
+    Patient modifierPatient(Long id, Patient patient);
 
-    void supprimerPatient(int id);
+    void supprimerPatient(Long id);
 
     List<Patient> afficherTousLesPatients();
 
-    Patient afficherPatientParId(int id);
+    Patient afficherPatientParId(Long id);
 }

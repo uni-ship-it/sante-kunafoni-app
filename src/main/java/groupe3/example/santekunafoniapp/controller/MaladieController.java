@@ -37,6 +37,16 @@ public class MaladieController {
         return new ResponseEntity<>(maladies, HttpStatus.OK);
     }
 
+    // modification
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MaladieDTO> updateMaladie(@PathVariable("id") Long id, @RequestBody MaladieDTO maladieDTO) {
+        // Appelle la méthode updateMaladie de ton service
+        MaladieDTO updatedMaladie = maladieServiceInterface.updateMaladie(id, maladieDTO);
+        return new ResponseEntity<>(updatedMaladie, HttpStatus.OK);
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMaladie(@PathVariable("id") Long id) {
         // Aligné sur ton interface : deleteMaladie

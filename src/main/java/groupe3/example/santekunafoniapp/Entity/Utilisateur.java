@@ -1,6 +1,13 @@
 package groupe3.example.santekunafoniapp.Entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.util.List;
@@ -9,9 +16,8 @@ import groupe3.example.santekunafoniapp.Entity.Notification;
 
 @Entity
 @Data
-@Table(name = "utilisateur")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Utilisateur {
+public abstract class Utilisateur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUtilisateur;
@@ -19,10 +25,6 @@ public class Utilisateur {
     private String prenom;
     private String tel;
     private String motpass;
-    private Role role;
-
-    // Constructeur sans paramètres
-    public Utilisateur(){
 
     }
 
