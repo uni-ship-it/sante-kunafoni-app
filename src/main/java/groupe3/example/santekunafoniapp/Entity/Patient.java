@@ -12,7 +12,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false) // Ajout de cette ligne
 @Table(name="patient")
 
-public class Patient extends Utilisateur {
+public class Patient {
     private String localite;
     private Long age;
     private String etat;
