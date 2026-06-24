@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
     public class Symptome{
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private long  id ;
+        private Long  id ;
         private String nom;
         private String description;
     }
