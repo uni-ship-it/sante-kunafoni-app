@@ -28,9 +28,14 @@ public class PatientServiceImpl implements PatientServiceInterface {
 
         // Mettre à jour les attributs
         patientExistant.setNom(patient.getNom());
-        // patientExistant.setPrenom(patient.getPrenom());
-        // patientExistant.setAge(patient.getAge());
-        // etc.
+        patientExistant.setPrenom(patient.getPrenom());
+        patientExistant.setAge(patient.getAge());
+        patientExistant.setEtat(patient.getEtat());
+        patientExistant.setLocalite(patient.getLocalite());
+        patientExistant.setSexe(patient.getSexe());
+        patientExistant.setTel(patient.getTel());
+        patientExistant.setPeriode(patient.getPeriode());
+        patientExistant.setMotpass(patient.getMotpass());
 
         return patientRepository.save(patientExistant);
     }
