@@ -1,18 +1,22 @@
 package groupe3.example.santekunafoniapp.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false) // Ajout de cette ligne
-@Table(name="patient")
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "patient")
+@PrimaryKeyJoinColumn(name = "idUtilisateur")
+public class Patient extends Utilisateur {
 
-public class Patient {
     private String localite;
     private Long age;
     private String etat;

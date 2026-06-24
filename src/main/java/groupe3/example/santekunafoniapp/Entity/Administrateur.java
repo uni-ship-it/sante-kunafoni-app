@@ -2,18 +2,18 @@ package groupe3.example.santekunafoniapp.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "Administrateur")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Administrateur {
-    private String email;
-    public Administrateur(){}
+public class Administrateur extends Utilisateur {
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    private String email;
 }

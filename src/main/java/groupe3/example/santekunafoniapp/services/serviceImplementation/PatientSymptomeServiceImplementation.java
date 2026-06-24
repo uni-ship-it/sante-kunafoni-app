@@ -30,12 +30,12 @@ public class PatientSymptomeServiceImplementation implements PatientSymptomeServ
 
     @Override
     public PatientSymptome ajouterSymptomeAuPatient(Long idPatient, Long idSymptome) {
-        if (patientSymptomeRepository
-                .existsByPatientIdUtilisateurAndSymptomeIdSymptome(idPatient, idSymptome)) {
+
+        if (patientSymptomeRepository.existsByPatientAndSymptome(idPatient, idSymptome)) {
             throw new RuntimeException("Ce symptôme est déjà assigné à ce patient");
         }
 
-        Patient patient = patientRepository.findById(idPatient.intValue())
+        Patient patient = patientRepository.findById(idPatient)
                 .orElseThrow(() -> new RuntimeException("Patient non trouvé"));
 
         Symptome symptome = symptomeRepository.findById(idSymptome)
@@ -51,7 +51,8 @@ public class PatientSymptomeServiceImplementation implements PatientSymptomeServ
 
     @Override
     public List<PatientSymptome> getPatientsBySymptome(Long symptomeId) {
-        return patientSymptomeRepository.findBySymptomeIdSymptome(symptomeId);
+
+        return patientSymptomeRepository.findBySymptomeId(symptomeId);
     }
 
     @Override
