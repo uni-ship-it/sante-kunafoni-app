@@ -74,9 +74,6 @@ public class AdministrateurServiceImplementation
 
     }
 
-
-
-
     @Override
     public List<AdministrateurDTO> afficherTous(){
 
@@ -88,19 +85,14 @@ public class AdministrateurServiceImplementation
 
     }
 
-
-
-
     @Override
     public AdministrateurDTO modifier(Long id, AdministrateurDTO dto){
-
 
         Administrateur admin =
                 repository.findById(id)
                         .orElseThrow(
                                 ()-> new RuntimeException("Administrateur introuvable")
                         );
-
 
         admin.setNom(dto.getNom());
         admin.setPrenom(dto.getPrenom());
@@ -113,9 +105,6 @@ public class AdministrateurServiceImplementation
 
     }
 
-
-
-
     @Override
     public void supprimer(Long id){
 
@@ -124,13 +113,10 @@ public class AdministrateurServiceImplementation
     }
 
 
-
-
     private AdministrateurDTO convertirDTO(Administrateur admin){
 
 
         AdministrateurDTO dto = new AdministrateurDTO();
-
 
         dto.setNom(admin.getNom());
 
@@ -149,6 +135,5 @@ public class AdministrateurServiceImplementation
         return dto;
 
     }
-
 
 }
