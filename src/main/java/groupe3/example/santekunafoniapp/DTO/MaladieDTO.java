@@ -1,7 +1,7 @@
 package groupe3.example.santekunafoniapp.DTO;
 
 import lombok.Data;
-import java.time.LocalDate; // Changement de l'import ici
+import java.time.LocalDate;
 
 @Data
 public class MaladieDTO {
