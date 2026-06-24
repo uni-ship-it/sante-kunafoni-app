@@ -5,6 +5,5 @@ import java.util.List;
 
 public interface NotificationServiceInterface {
     Notification envoyerNotification(Notification notif);
-    void marquerCommeLue(Long id);
-    List<Notification> getNotificationsByUtilisateur(Long userId);
+    List<Notification> getAllNotifications();
 }

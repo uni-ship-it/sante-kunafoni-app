@@ -26,14 +26,14 @@ public class PatientController {
 
     @Operation(summary = "Modifier un patient", description = "Permet de modifier un patient")
     @PutMapping("/{id}")
-    public Patient modifierPatient(@PathVariable int id,
+    public Patient modifierPatient(@PathVariable Long id,
                                    @RequestBody Patient patient) {
         return patientService.modifierPatient(id, patient);
     }
 
     @Operation(summary = "Supprimer un patient", description = "Permet de supprimer un patient")
     @DeleteMapping("/{id}")
-    public void supprimerPatient(@PathVariable int id) {
+    public void supprimerPatient(@PathVariable Long id) {
         patientService.supprimerPatient(id);
     }
 
@@ -45,7 +45,7 @@ public class PatientController {
 
     @Operation(summary = "Récuperer un patient", description = "Permet de récuperer un patient à travers son identifiant")
     @GetMapping("/{id}")
-    public Patient afficherPatientParId(@PathVariable int id) {
+    public Patient afficherPatientParId(@PathVariable Long id) {
         return patientService.afficherPatientParId(id);
     }
 }

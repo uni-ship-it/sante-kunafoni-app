@@ -5,21 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
-    @Entity
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public class Notification {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
-        private String titre;
-        private String message;
-        private LocalDateTime datePublication;
-        private boolean lue; // Pour gérer l'état
 
         @ManyToOne
         @JoinColumn(name = "utilisateur_id")
         private groupe3.example.santekunafoniapp.Entity.Utilisateur utilisateur;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idNotif")
+    private Long id;
+
+    @Column(nullable = false)
+    private String titre;
+
+    private LocalDateTime datePublication;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String message;
+}
