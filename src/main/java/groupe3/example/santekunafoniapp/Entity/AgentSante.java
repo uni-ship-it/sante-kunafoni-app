@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "agent_sante")
 @PrimaryKeyJoinColumn(name = "idUtilisateur")
-public class AgentSante extends Utilisateur {
+public class AgentSante{
 
     private String specialite;
 

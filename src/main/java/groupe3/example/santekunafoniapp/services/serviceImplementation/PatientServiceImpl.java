@@ -21,7 +21,7 @@ public class PatientServiceImpl implements PatientServiceInterface {
     }
 
     @Override
-    public Patient modifierPatient(int id, Patient patient) {
+    public Patient modifierPatient(Long id, Patient patient) {
 
         Patient patientExistant = patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient introuvable"));
@@ -41,7 +41,7 @@ public class PatientServiceImpl implements PatientServiceInterface {
     }
 
     @Override
-    public void supprimerPatient(int id) {
+    public void supprimerPatient(Long id) {
 
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient introuvable"));
@@ -55,7 +55,7 @@ public class PatientServiceImpl implements PatientServiceInterface {
     }
 
     @Override
-    public Patient afficherPatientParId(int id) {
+    public Patient afficherPatientParId(Long id) {
         return patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient introuvable"));
     }

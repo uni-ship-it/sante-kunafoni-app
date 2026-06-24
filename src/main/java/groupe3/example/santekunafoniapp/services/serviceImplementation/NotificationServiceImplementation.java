@@ -19,7 +19,6 @@ public class NotificationServiceImplementation implements NotificationServiceInt
     @Override
     public Notification envoyerNotification(Notification notif) {
         notif.setDatePublication(LocalDateTime.now());
-        notif.setLue(false);
         return repository.save(notif);
     }
 

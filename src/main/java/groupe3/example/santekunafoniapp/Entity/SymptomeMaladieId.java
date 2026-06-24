@@ -10,8 +10,9 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class SymptomeMaladieId implements Serializable {
 
-    private Integer idSymptome;
-    private Integer idMaladie;
+    private Long idSymptome;
+    private Long idMaladie;
 }

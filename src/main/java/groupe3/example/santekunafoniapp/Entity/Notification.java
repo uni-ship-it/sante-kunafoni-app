@@ -21,5 +21,6 @@ import java.time.LocalDateTime;
         @ManyToOne
         @JoinColumn(name = "utilisateur_id")
         private groupe3.example.santekunafoniapp.Entity.Utilisateur utilisateur;
-    }
 
+        // Hamath t'es beau !!!!
+    }
