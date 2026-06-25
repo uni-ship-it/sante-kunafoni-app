@@ -17,6 +17,9 @@ public interface MaladieServiceInterface {
         // Modifier une maladie
         MaladieDTO updateMaladie(Long idMaladie, MaladieDTO maladieDTO);
 
+        // Modifier une maladie partiellement
+        MaladieDTO partialUpdateMaladie(Long idMaladie, MaladieDTO maladieDTO);
+
         // Supprimer une maladie
         void deleteMaladie(Long idMaladie);
 }

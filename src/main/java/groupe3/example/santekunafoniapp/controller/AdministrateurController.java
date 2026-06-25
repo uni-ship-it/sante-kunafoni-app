@@ -7,18 +7,15 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
 @RequestMapping("/api/administrateurs")
 public class AdministrateurController {
 
     private final AdministrateurServiceInterface administrateurService;
 
-
     public AdministrateurController(AdministrateurServiceInterface administrateurService) {
         this.administrateurService = administrateurService;
     }
-
 
     @PostMapping
     public AdministrateurDTO ajouter(@RequestBody AdministrateurDTO dto){
@@ -31,12 +28,10 @@ public class AdministrateurController {
         return administrateurService.afficherTous();
     }
 
-
     @GetMapping("/{id}")
     public AdministrateurDTO afficherParId(@PathVariable Long id){
         return administrateurService.afficherParId(id);
     }
-
 
     @PutMapping("/{id}")
     public AdministrateurDTO modifier(
@@ -45,7 +40,6 @@ public class AdministrateurController {
 
         return administrateurService.modifier(id,dto);
     }
-
 
     @DeleteMapping("/{id}")
     public void supprimer(@PathVariable Long id){

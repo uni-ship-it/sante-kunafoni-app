@@ -3,11 +3,15 @@ package groupe3.example.santekunafoniapp.controller;
 import groupe3.example.santekunafoniapp.Entity.Symptome;
 import groupe3.example.santekunafoniapp.services.serviceInterface.SymptomeServiceInterface;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@Tag(name = "Symptome", description = "Gestion des symptome")
+
+@Tag(name = "Symptômes", description = "Gestion des symptômes")
 @RestController
 @RequestMapping("/api/symptomes")
 public class SymptomeController {
@@ -18,35 +22,76 @@ public class SymptomeController {
         this.service = service;
     }
 
-    @Operation(summary = "Recuperer les symptomes", description = "Cette methode permet de recuperer tous symtomes !")
+    @Operation(
+            summary = "Lister tous les symptômes",
+            description = "Retourne la liste complète de tous les symptômes enregistrés."
+    )
+    @ApiResponse(responseCode = "200", description = "Liste retournée avec succès")
     @GetMapping
-    public List<Symptome> getAll(){
+    public List<Symptome> getAll() {
         return service.getAllSymptome();
     }
 
-    @Operation(summary = "Recuperer les symptomes", description = "Cette methode permet de recuperer un symtome à travers son identifiant !")
+    @Operation(
+            summary = "Récupérer un symptôme par ID",
+            description = "Retourne les détails d'un symptôme à partir de son identifiant."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Symptôme trouvé"),
+            @ApiResponse(responseCode = "404", description = "Symptôme non trouvé")
+    })
     @GetMapping("/{id}")
-    public Symptome getById(@PathVariable Long id){
+    public Symptome getById(
+            @Parameter(description = "ID du symptôme", required = true)
+            @PathVariable Long id
+    ) {
         return service.getSymptomeById(id);
     }
 
-    @Operation(summary = "Recuperer un symptome", description = "Cette methode permet de recuperer un symtome à travers son identifiant !")
+    @Operation(
+            summary = "Créer un symptôme",
+            description = "Enregistre un nouveau symptôme dans le système."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Symptôme créé avec succès"),
+            @ApiResponse(responseCode = "400", description = "Données invalides")
+    })
     @PostMapping
-    public Symptome createSymptome(@RequestBody Symptome symptome){
+    public Symptome createSymptome(@RequestBody Symptome symptome) {
         return service.createSymptome(symptome);
     }
 
-    @Operation(summary = "Créer un symptome", description = "Cette methode permet de créer un symtome !")
+    @Operation(
+            summary = "Modifier un symptôme",
+            description = "Met à jour les informations d'un symptôme existant."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Symptôme modifié avec succès"),
+            @ApiResponse(responseCode = "404", description = "Symptôme non trouvé")
+    })
     @PutMapping("/{id}")
-    public Symptome updateById(@PathVariable  Long id, @RequestBody Symptome symptome) {
+    public Symptome updateById(
+            @Parameter(description = "ID du symptôme à modifier", required = true)
+            @PathVariable Long id,
+            @RequestBody Symptome symptome
+    ) {
         return service.updateSymptomeById(id, symptome);
     }
 
-    @Operation(summary = "Supprimer un symptome", description = "Cette methode permet de supprimer un symtome !")
+    @Operation(
+            summary = "Supprimer un symptôme",
+            description = "Supprime définitivement un symptôme à partir de son identifiant."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Symptôme supprimé avec succès"),
+            @ApiResponse(responseCode = "404", description = "Symptôme non trouvé")
+    })
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id){
-//        return service.deleteSymptomeById(id);
+    public void deleteById(
+            @Parameter(description = "ID du symptôme à supprimer", required = true)
+            @PathVariable Long id
+    ) {
+        service.deleteSymptomeById(id);
+        // ✅ Appel du service décommenté — assure-toi que deleteSymptomeById existe dans l'interface
     }
 }
-
-
