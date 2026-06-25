@@ -11,55 +11,44 @@ public class Traitement {
     private Long idTraitement;
 
     private String nomTraitement;
-
     private LocalDate datedebut;
-
     private LocalDate datefin;
-
     private String description;
 
-    public Traitement() {
+    @ManyToOne
+    @JoinColumn(name = "id_maladie")
+    private Maladie maladie;
 
-    }
+    @ManyToOne
+    @JoinColumn(name = "idUtilisateur")
+    private Utilisateur utilisateur;
 
-    public Long getIdTraitement() {
-        return idTraitement;
-    }
+    @ManyToOne
+    @JoinColumn(name = "idPatient")
+    private Patient patient;
 
-    public void setIdTraitement(Long idTraitement) {
-        this.idTraitement = idTraitement;
-    }
+    // Getters et Setters
+    public Long getIdTraitement() { return idTraitement; }
+    public void setIdTraitement(Long idTraitement) { this.idTraitement = idTraitement; }
 
-    public String getNomTraitement() {
-        return nomTraitement;
-    }
+    public String getNomTraitement() { return nomTraitement; }
+    public void setNomTraitement(String nomTraitement) { this.nomTraitement = nomTraitement; }
 
-    public void setNomTraitement(String nomTraitement) {
-        this.nomTraitement = nomTraitement;
-    }
+    public LocalDate getDatedebut() { return datedebut; }
+    public void setDatedebut(LocalDate datedebut) { this.datedebut = datedebut; }
 
-    public LocalDate getDatedebut() {
-        return datedebut;
-    }
+    public LocalDate getDatefin() { return datefin; }
+    public void setDatefin(LocalDate datefin) { this.datefin = datefin; }
 
-    public void setDatedebut(LocalDate datedebut) {
-        this.datedebut = datedebut;
-    }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 
-    public LocalDate getDatefin() {
-        return datefin;
-    }
+    public Maladie getMaladie() { return maladie; }
+    public void setMaladie(Maladie maladie) { this.maladie = maladie; }
 
-    public void setDatefin(LocalDate datefin) {
-        this.datefin = datefin;
-    }
+    public Utilisateur getUtilisateur() { return utilisateur; }
+    public void setUtilisateur(Utilisateur utilisateur) { this.utilisateur = utilisateur; }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
+    public Patient getPatient() { return patient; }
+    public void setPatient(Patient patient) { this.patient = patient; }
 }

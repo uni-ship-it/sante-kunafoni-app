@@ -1,46 +1,139 @@
 package groupe3.example.santekunafoniapp.services.serviceImplementation;
 
-import groupe3.example.santekunafoniapp.DTO.UtilisateurDTO;
+
+import groupe3.example.santekunafoniapp.DTO.AdministrateurDTO;
 import groupe3.example.santekunafoniapp.Entity.Administrateur;
+import groupe3.example.santekunafoniapp.Entity.Role;
 import groupe3.example.santekunafoniapp.Repository.AdministrateurRepository;
 import groupe3.example.santekunafoniapp.services.serviceInterface.AdministrateurServiceInterface;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+
 import java.util.List;
 
+
+
 @Service
+public class AdministrateurServiceImplementation
+        implements AdministrateurServiceInterface {
 
-public class AdministrateurServiceImplementation implements AdministrateurServiceInterface {
-    public final AdministrateurRepository administrateurRepository;
-    public AdministrateurServiceImplementation(AdministrateurRepository administrateurRepository){
-        this.administrateurRepository=administrateurRepository;
-    }
-    @Override
-    public UtilisateurDTO ajouterUtilisateur(UtilisateurDTO dto){
-        return dto;
-    }
-    @Override
-    public UtilisateurDTO modifierUtilisateur( Long id ,UtilisateurDTO dto) {
-        return dto;
-    }
 
-    @Override
-    public void supprimerUtilisateur(Long id) {
-        // delete repository
+    private final AdministrateurRepository repository;
+
+
+
+    public AdministrateurServiceImplementation(
+            AdministrateurRepository repository){
+
+        this.repository = repository;
     }
 
+
+
     @Override
-    public List<UtilisateurDTO> afficherUtilisateurs() {
-        return new ArrayList<>();
+    public AdministrateurDTO ajouter(AdministrateurDTO dto){
+
+
+        Administrateur admin = new Administrateur();
+
+        admin.setNom(dto.getNom());
+        admin.setPrenom(dto.getPrenom());
+        admin.setEmail(dto.getEmail());
+        admin.setTel(dto.getTel());
+        admin.setMotpass(dto.getMotpass());
+        admin.setRole(Role.valueOf(dto.getRole()));
+
+
+        Administrateur saved = repository.save(admin);
+
+
+        return convertirDTO(saved);
+
     }
+
+
+
     @Override
-    public UtilisateurDTO afficherUtilisateurParId(Long id){
-        Administrateur administrateur= administrateurRepository.findById(id).orElseThrow(()->new RuntimeException("Utilisateur introuvable"));
-        UtilisateurDTO dto=new UtilisateurDTO();
-        dto.setNom(administrateur.getNom());
-        dto.setPrenom(administrateur.getPrenom());
+    public AdministrateurDTO afficherParId(Long id){
+
+
+        Administrateur admin =
+                repository.findById(id)
+                        .orElseThrow(() ->new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Administrateur introuvable"
+        )
+                        );
+
+
+        return convertirDTO(admin);
+
+    }
+
+    @Override
+    public List<AdministrateurDTO> afficherTous(){
+
+
+        return repository.findAll()
+                .stream()
+                .map(this::convertirDTO)
+                .toList();
+
+    }
+
+    @Override
+    public AdministrateurDTO modifier(Long id, AdministrateurDTO dto){
+
+        Administrateur admin =
+                repository.findById(id)
+                        .orElseThrow(
+                                ()-> new RuntimeException("Administrateur introuvable")
+                        );
+
+        admin.setNom(dto.getNom());
+        admin.setPrenom(dto.getPrenom());
+        admin.setEmail(dto.getEmail());
+        admin.setTel(dto.getTel());
+        admin.setMotpass(dto.getMotpass());
+        admin.setRole(Role.valueOf(dto.getRole()));
+
+        return convertirDTO(repository.save(admin));
+
+    }
+
+    @Override
+    public void supprimer(Long id){
+
+        repository.deleteById(id);
+
+    }
+
+
+    private AdministrateurDTO convertirDTO(Administrateur admin){
+
+
+        AdministrateurDTO dto = new AdministrateurDTO();
+
+        dto.setNom(admin.getNom());
+
+        dto.setPrenom(admin.getPrenom());
+
+        dto.setEmail(admin.getEmail());
+        dto.setTel(admin.getTel());
+        dto.setMotpass(admin.getMotpass());
+
+        if (admin.getRole() != null) {
+            dto.setRole(admin.getRole().name());
+        } else {
+            dto.setRole("NON_DEFINI");
+        }
+
         return dto;
+
     }
 
 }

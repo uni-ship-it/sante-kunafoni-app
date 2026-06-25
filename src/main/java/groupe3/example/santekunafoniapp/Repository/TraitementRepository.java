@@ -1,13 +1,10 @@
 package groupe3.example.santekunafoniapp.Repository;
 
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import groupe3.example.santekunafoniapp.Entity.Traitement;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-
-public interface TraitementRepository
-        extends JpaRepository<Traitement, Long>{
-
+@Repository
+public interface TraitementRepository extends JpaRepository<Traitement, Long> {
 
 }
