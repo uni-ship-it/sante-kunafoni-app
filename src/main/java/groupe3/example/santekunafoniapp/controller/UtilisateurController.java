@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Tag(name = "Utilisateurs", description = "Gestion des comptes utilisateurs")
 @RestController
-@RequestMapping("/utilisateurs")
+@RequestMapping("/api/utilisateurs")
 public class UtilisateurController {
 
     private final UtilisateurServiceInterface utilisateurService;
@@ -62,7 +62,7 @@ public class UtilisateurController {
             @ApiResponse(responseCode = "201", description = "Utilisateur créé avec succès"),
             @ApiResponse(responseCode = "400", description = "Données invalides")
     })
-    @PostMapping("/add")
+    @PostMapping
     public ResponseEntity<String> add(@RequestBody UtilisateurDTO uDTO) {
         try {
             utilisateurService.addUtilisateur(uDTO);
@@ -80,7 +80,7 @@ public class UtilisateurController {
             @ApiResponse(responseCode = "200", description = "Utilisateur modifié avec succès"),
             @ApiResponse(responseCode = "404", description = "Utilisateur non trouvé")
     })
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> update(
             @Parameter(description = "ID de l'utilisateur à modifier", required = true)
             @PathVariable Long id,
