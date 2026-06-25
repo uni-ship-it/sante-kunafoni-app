@@ -14,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.List;
-
+import java.util.Optional;
 
 
 @Service
@@ -35,7 +35,7 @@ public class AdministrateurServiceImplementation
 
 
     @Override
-    public AdministrateurDTO ajouter(AdministrateurDTO dto){
+    public  String ajouter(AdministrateurDTO dto){
 
 
         Administrateur admin = new Administrateur();
@@ -47,11 +47,9 @@ public class AdministrateurServiceImplementation
         admin.setMotpass(dto.getMotpass());
         admin.setRole(Role.valueOf(dto.getRole()));
 
+        repository.save(admin);
+        return "Ajouté avec succès";
 
-        Administrateur saved = repository.save(admin);
-
-
-        return convertirDTO(saved);
 
     }
 
@@ -71,22 +69,20 @@ public class AdministrateurServiceImplementation
 
 
         return convertirDTO(admin);
-
     }
 
     @Override
     public List<AdministrateurDTO> afficherTous(){
 
 
-        return repository.findAll()
+         return repository.findAll()
                 .stream()
                 .map(this::convertirDTO)
                 .toList();
-
     }
 
     @Override
-    public AdministrateurDTO modifier(Long id, AdministrateurDTO dto){
+    public String modifier(Long id, AdministrateurDTO dto){
 
         Administrateur admin =
                 repository.findById(id)
@@ -101,14 +97,16 @@ public class AdministrateurServiceImplementation
         admin.setMotpass(dto.getMotpass());
         admin.setRole(Role.valueOf(dto.getRole()));
 
-        return convertirDTO(repository.save(admin));
+        convertirDTO(repository.save(admin));
+         return "Mofification reussié";
 
     }
 
     @Override
-    public void supprimer(Long id){
+    public String supprimer(Long id){
 
         repository.deleteById(id);
+        return "La Suppression a été affectuer";
 
     }
 

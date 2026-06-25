@@ -1,6 +1,7 @@
 package groupe3.example.santekunafoniapp.controller;
 
 
+import groupe3.example.santekunafoniapp.DTO.TraitementDTO;
 import groupe3.example.santekunafoniapp.Entity.Traitement;
 import groupe3.example.santekunafoniapp.services.serviceImplementation.TraitementServiceImplementation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +32,7 @@ public class TraitementController {
             @ApiResponse(responseCode = "400", description = "Données invalides")
     })
     @PostMapping
-    public Traitement ajouter(@RequestBody Traitement traitement) {
+    public Traitement ajouter(@RequestBody TraitementDTO traitement) {
         return service.ajouterTraitement(traitement);
     }
 
@@ -66,7 +67,7 @@ public class TraitementController {
     public Traitement modifier(
             @Parameter(description = "ID du traitement à modifier", required = true)
             @PathVariable Long id,
-            @RequestBody Traitement traitement
+            @RequestBody TraitementDTO traitement
     ) {
         return service.modifierTraitement(id, traitement);
     }
