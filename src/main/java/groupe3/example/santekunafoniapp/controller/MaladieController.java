@@ -81,14 +81,15 @@ public class MaladieController {
         return ResponseEntity.ok(maladieServiceInterface.updateMaladie(id, maladieDTO));
     }
 
-    @Operation(
-            summary = "Supprimer une maladie",
-            description = "Supprime définitivement une maladie à partir de son identifiant."
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Maladie supprimée avec succès"),
-            @ApiResponse(responseCode = "404", description = "Maladie non trouvée")
-    })
+    @PatchMapping("/{id}")
+    public ResponseEntity<MaladieDTO> partialUpdateMaladie(@PathVariable("id") Long id, @RequestBody MaladieDTO maladieDTO) {
+        //  Nom modifié ici pour éviter la duplication + appel à une méthode "patch" du service
+        MaladieDTO updatedMaladie = maladieServiceInterface.partialUpdateMaladie(id, maladieDTO);
+        return new ResponseEntity<>(updatedMaladie, HttpStatus.OK);
+    }
+
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMaladie(
             @Parameter(description = "ID de la maladie à supprimer", required = true)

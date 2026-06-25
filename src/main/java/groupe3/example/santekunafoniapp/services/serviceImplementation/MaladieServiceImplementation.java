@@ -58,6 +58,25 @@ public class MaladieServiceImplementation implements MaladieServiceInterface {
     }
 
     @Override
+    public MaladieDTO partialUpdateMaladie(Long idMaladie, MaladieDTO maladieDTO) {
+        Maladie existingMaladie = maladieRepository.findById(idMaladie)
+                .orElseThrow(() -> new RuntimeException("Maladie introuvable avec l'id : " + idMaladie));
+
+        // On modifie UNIQUEMENT si la nouvelle valeur n'est pas nulle
+        if (maladieDTO.getNom() != null) {
+            existingMaladie.setNom(maladieDTO.getNom());
+        }
+        if (maladieDTO.getDescription() != null) {
+            existingMaladie.setDescription(maladieDTO.getDescription());
+        }
+        if (maladieDTO.getDateDeclaration() != null) {
+            existingMaladie.setDateDeclaration(maladieDTO.getDateDeclaration());
+        }
+
+        return convertToDTO(maladieRepository.save(existingMaladie));
+    }
+
+    @Override
     public void deleteMaladie(Long idMaladie) {
         // Aligné sur le nom du paramètre de l'interface (idMaladie)
         Maladie maladie = maladieRepository.findById(idMaladie)
