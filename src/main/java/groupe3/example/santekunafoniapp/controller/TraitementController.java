@@ -61,15 +61,7 @@ public class TraitementController {
         return service.getTraitementById(id)
                 .orElseThrow(() -> new RuntimeException("Traitement non trouvé"));
     }
-
-    @Operation(
-            summary = "Modifier un traitement",
-            description = "Met à jour les informations d'un traitement existant."
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Traitement modifié avec succès"),
-            @ApiResponse(responseCode = "404", description = "Traitement non trouvé")
-    })
+    @Operation(summary = "Modifier un traitement", description = "Cette methode permet de modifier un traitement spécifique !")
     @PutMapping("/{id}")
     public Traitement modifier(
             @Parameter(description = "ID du traitement à modifier", required = true)
@@ -78,15 +70,7 @@ public class TraitementController {
     ) {
         return service.modifierTraitement(id, traitement);
     }
-
-    @Operation(
-            summary = "Supprimer un traitement",
-            description = "Supprime définitivement un traitement à partir de son identifiant."
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Traitement supprimé avec succès"),
-            @ApiResponse(responseCode = "404", description = "Traitement non trouvé")
-    })
+    @Operation(summary = "Supprimer un traitement", description = "Cette methode permet de supprimer un traitement !")
     @DeleteMapping("/{id}")
     public String supprimer(
             @Parameter(description = "ID du traitement à supprimer", required = true)
