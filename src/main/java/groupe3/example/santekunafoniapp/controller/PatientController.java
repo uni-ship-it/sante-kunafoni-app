@@ -4,6 +4,7 @@ import groupe3.example.santekunafoniapp.Entity.Patient;
 import groupe3.example.santekunafoniapp.services.serviceInterface.PatientServiceInterface;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class PatientController {
     }
 
     @Operation(summary = "Créer un patient", description = "Permet de créer un patient")
+    @ResponseStatus(HttpStatus.CREATED) // <--- Springdoc comprend cela et met la doc à jour en 201
     @PostMapping
     public Patient ajouterPatient(@RequestBody Patient patient) {
         return patientService.ajouterPatient(patient);
