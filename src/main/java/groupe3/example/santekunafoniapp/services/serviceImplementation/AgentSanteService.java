@@ -37,6 +37,11 @@ public class AgentSanteService {
                         .orElseThrow(() ->
                                 new RuntimeException("Agent non trouvé"));
 
+        ancien.setNom(agent.getNom());
+        ancien.setPrenom(agent.getPrenom());
+        ancien.setMotpass(agent.getMotpass());
+        ancien.setTel(agent.getTel());
+        ancien.setRole(agent.getRole());
         ancien.setSpecialite(agent.getSpecialite());
         ancien.setCentre(agent.getCentre());
         ancien.setEmail(agent.getEmail());
