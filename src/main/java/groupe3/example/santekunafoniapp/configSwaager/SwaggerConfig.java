@@ -1,4 +1,4 @@
-package groupe3.example.santekunafoniapp.config;
+package groupe3.example.santekunafoniapp.configSwaager;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
