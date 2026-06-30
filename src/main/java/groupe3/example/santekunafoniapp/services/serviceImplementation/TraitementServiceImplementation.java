@@ -1,56 +1,155 @@
 package groupe3.example.santekunafoniapp.services.serviceImplementation;
 
+
+
 import groupe3.example.santekunafoniapp.DTO.TraitementDTO;
-import groupe3.example.santekunafoniapp.Entity.Traitement;
-import groupe3.example.santekunafoniapp.Repository.TraitementRepository;
+
+import groupe3.example.santekunafoniapp.Entity.*;
+
+import groupe3.example.santekunafoniapp.Repository.*;
+
+
 import groupe3.example.santekunafoniapp.services.serviceInterface.TraitementServiceInterface;
+
+
 import org.springframework.stereotype.Service;
+
+
 import java.util.List;
 import java.util.Optional;
 
+
+
 @Service
-public class TraitementServiceImplementation implements TraitementServiceInterface {
+public class TraitementServiceImplementation
+        implements TraitementServiceInterface {
 
-    private final TraitementRepository repository;
-    public TraitementServiceImplementation(TraitementRepository repository) {
-        this.repository = repository;
+
+
+    private final TraitementRepository traitementRepository;
+
+    private final MaladieRepository maladieRepository;
+
+    private final PatientRepository patientRepository;
+
+    private final AgentSanteRepository agentSanteRepository;
+
+
+
+
+    public TraitementServiceImplementation(
+            TraitementRepository traitementRepository,
+            MaladieRepository maladieRepository,
+            PatientRepository patientRepository,
+            AgentSanteRepository agentSanteRepository
+    ){
+
+        this.traitementRepository = traitementRepository;
+        this.maladieRepository = maladieRepository;
+        this.patientRepository = patientRepository;
+        this.agentSanteRepository = agentSanteRepository;
+
     }
 
+
+
+
+
     @Override
-    public Traitement ajouterTraitement(TraitementDTO dto) {
+    public Traitement ajouterTraitement(TraitementDTO dto){
         Traitement traitement = new Traitement();
-        return mapperEtSauvegarder(traitement, dto);
+        return remplirTraitement(traitement,dto);
+
     }
 
     @Override
-    public List<Traitement> getAllTraitements() {
-        return repository.findAll();
+    public List<Traitement> getAllTraitements(){
+
+        return traitementRepository.findAll();
+
     }
 
     @Override
-    public Optional<Traitement> getTraitementById(Long id) {
-        return repository.findById(id);
+    public Optional<Traitement> getTraitementById(Long id){
+
+        return traitementRepository.findById(id);
+
     }
 
     @Override
-    public Traitement modifierTraitement(Long id, TraitementDTO dto) {
-        Traitement ancien = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Traitement non trouvé"));
-        return mapperEtSauvegarder(ancien, dto);
+    public Traitement modifierTraitement(Long id,TraitementDTO dto){
+
+
+        Traitement traitement =
+                traitementRepository.findById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException("Traitement introuvable")
+                        );
+
+
+        return remplirTraitement(traitement,dto);
+
     }
 
     @Override
-    public void supprimerTraitement(Long id) {
-        repository.deleteById(id);
+    public void supprimerTraitement(Long id){
+
+        traitementRepository.deleteById(id);
+
     }
 
-    // Méthode partagée pour convertir le DTO vers l'entité
-    private Traitement mapperEtSauvegarder(Traitement traitement, TraitementDTO dto) {
+    private Traitement remplirTraitement(
+            Traitement traitement,
+            TraitementDTO dto
+    ){
+
+
         traitement.setNomTraitement(dto.getNomTraitement());
+
         traitement.setDatedebut(dto.getDatedebut());
+
         traitement.setDatefin(dto.getDatefin());
+
         traitement.setDescription(dto.getDescription());
 
-        return repository.save(traitement);
+
+
+        traitement.setMaladie(
+
+                maladieRepository.findById(dto.getIdMaladie())
+
+                        .orElseThrow(
+                                () -> new RuntimeException("Maladie introuvable")
+                        )
+
+        );
+
+
+
+        traitement.setPatient(
+
+                patientRepository.findById(dto.getIdPatient())
+
+                        .orElseThrow(
+                                () -> new RuntimeException("Patient introuvable")
+                        )
+
+        );
+
+        traitement.setAgentSante(
+
+                agentSanteRepository.findById(dto.getIdAgentSante())
+
+                        .orElseThrow(
+                                () -> new RuntimeException("Agent santé introuvable")
+                        )
+
+        );
+
+
+
+        return traitementRepository.save(traitement);
+
     }
+
 }

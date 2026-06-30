@@ -1,7 +1,10 @@
 package groupe3.example.santekunafoniapp.DTO;
 
+
 import lombok.Data;
+
 import java.time.LocalDate;
+
 
 @Data
 public class TraitementDTO {
@@ -10,6 +13,6 @@ public class TraitementDTO {
     private LocalDate datefin;
     private String description;
     private Long idMaladie;
-    private Long idUtilisateur;
     private Long idPatient;
+    private Long idAgentSante;
 }

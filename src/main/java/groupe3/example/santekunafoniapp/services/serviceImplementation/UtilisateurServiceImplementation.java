@@ -2,7 +2,7 @@ package groupe3.example.santekunafoniapp.services.serviceImplementation;
 
 import groupe3.example.santekunafoniapp.DTO.UtilisateurDTO;
 import groupe3.example.santekunafoniapp.Entity.*;
-import groupe3.example.santekunafoniapp.repository.UtilisateurRepository;
+import groupe3.example.santekunafoniapp.Repository.UtilisateurRepository;
 import groupe3.example.santekunafoniapp.services.serviceInterface.UtilisateurServiceInterface;
 import org.springframework.stereotype.Service;
 

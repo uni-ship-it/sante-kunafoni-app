@@ -2,17 +2,21 @@ package groupe3.example.santekunafoniapp.services.serviceInterface;
 
 
 import groupe3.example.santekunafoniapp.DTO.AdministrateurDTO;
+import groupe3.example.santekunafoniapp.Entity.AgentSante;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface AdministrateurServiceInterface {
 
 
-    AdministrateurDTO ajouter(AdministrateurDTO dto);
+    public String ajouter(AdministrateurDTO dto);
 
 
-    AdministrateurDTO modifier(Long id, AdministrateurDTO dto);
+    public String modifier(Long id, AdministrateurDTO dto);
 
 
     AdministrateurDTO afficherParId(Long id);
@@ -21,6 +25,6 @@ public interface AdministrateurServiceInterface {
     List<AdministrateurDTO> afficherTous();
 
 
-    void supprimer(Long id);
+    public String supprimer(Long id);
 
 }

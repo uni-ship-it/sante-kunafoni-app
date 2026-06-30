@@ -1,6 +1,8 @@
 package groupe3.example.santekunafoniapp.controller;
 
+import groupe3.example.santekunafoniapp.DTO.PatientDTO;
 import groupe3.example.santekunafoniapp.Entity.Patient;
+import groupe3.example.santekunafoniapp.Entity.Role;
 import groupe3.example.santekunafoniapp.services.serviceInterface.PatientServiceInterface;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,7 +33,18 @@ public class PatientController {
             @ApiResponse(responseCode = "400", description = "Données invalides")
     })
     @PostMapping
-    public Patient ajouterPatient(@RequestBody Patient patient) {
+    public Patient ajouterPatient(@RequestBody PatientDTO patientDTO) {
+        Patient patient = new Patient();
+        patient.setMotpass(patientDTO.getMotPass());
+        patient.setNom(patientDTO.getNom());
+        patient.setPrenom(patientDTO.getPrenom());
+        patient.setLocalite(patientDTO.getLocalite());
+        patient.setPeriode(patientDTO.getPeriode());
+        patient.setAge(patientDTO.getAge());
+        patient.setEtat(patientDTO.getEtat());
+        patient.setTel(patientDTO.getTel());
+        patient.setRole(Role.PATIENT);
+        patient.setSexe(patientDTO.getSexe());
         return patientService.ajouterPatient(patient);
     }
 

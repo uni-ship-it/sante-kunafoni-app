@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class UtilisateurDTO {
     private String nom;
-    private String Prenom;
+    private String prenom;
     private String tel;
     private String motPass;
     private Role role;
