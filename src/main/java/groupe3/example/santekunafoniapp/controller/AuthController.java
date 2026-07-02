@@ -21,8 +21,8 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(request));
     }
     @GetMapping("/hash")
-    public String hash() {
+    public String hash(@RequestParam String motpass) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.encode("P2027");
+        return encoder.encode(motpass);   // ← n'importe quel mot de passe, donné directement dans l'URL
     }
 }
