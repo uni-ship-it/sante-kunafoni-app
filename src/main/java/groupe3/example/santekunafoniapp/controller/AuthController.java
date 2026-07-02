@@ -23,6 +23,6 @@ public class AuthController {
     @GetMapping("/hash")
     public String hash() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        return encoder.encode("Aliou123");
+        return encoder.encode("P2027");
     }
 }
