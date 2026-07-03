@@ -17,6 +17,7 @@ public class PatientServiceImpl implements PatientServiceInterface {
 
     @Override
     public Patient ajouterPatient(Patient patient) {
+
         return patientRepository.save(patient);
     }
 
@@ -36,7 +37,6 @@ public class PatientServiceImpl implements PatientServiceInterface {
         patientExistant.setTel(patient.getTel());
         patientExistant.setPeriode(patient.getPeriode());
         patientExistant.setMotpass(patient.getMotpass());
-
         return patientRepository.save(patientExistant);
     }
 

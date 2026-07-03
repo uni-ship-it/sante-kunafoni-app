@@ -7,6 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -16,6 +19,14 @@ import java.util.Date;
 @Table(name = "patient")
 @PrimaryKeyJoinColumn(name = "idUtilisateur")
 public class Patient extends Utilisateur {
+
+    @ManyToMany
+    @JoinTable(
+            name = "patient_maladie",
+            joinColumns = @JoinColumn(name = "id_utilisateur"),
+            inverseJoinColumns = @JoinColumn(name = "id_maladie")
+    )
+    private Set<Maladie> maladies = new HashSet<>();
 
     private String localite;
     private Long age;
