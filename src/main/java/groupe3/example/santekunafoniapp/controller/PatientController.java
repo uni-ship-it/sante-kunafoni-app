@@ -1,17 +1,23 @@
 package groupe3.example.santekunafoniapp.controller;
 
+import groupe3.example.santekunafoniapp.DTO.MaladieDTO;
 import groupe3.example.santekunafoniapp.DTO.PatientDTO;
+import groupe3.example.santekunafoniapp.Entity.Maladie;
 import groupe3.example.santekunafoniapp.Entity.Patient;
 import groupe3.example.santekunafoniapp.Entity.Role;
+import groupe3.example.santekunafoniapp.Repository.MaladieRepository;
 import groupe3.example.santekunafoniapp.services.serviceInterface.PatientServiceInterface;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Tag(name = "Patients", description = "Gestion des comptes patients")
 @RestController
@@ -19,6 +25,8 @@ import java.util.List;
 public class PatientController {
 
     private final PatientServiceInterface patientService;
+    @Autowired
+    private MaladieRepository maladieRepository;
 
     public PatientController(PatientServiceInterface patientService) {
         this.patientService = patientService;
@@ -45,6 +53,9 @@ public class PatientController {
         patient.setTel(patientDTO.getTel());
         patient.setRole(Role.PATIENT);
         patient.setSexe(patientDTO.getSexe());
+        Set<Maladie> maladies = new HashSet<>(
+                maladieRepository.findAllById(patientDTO.getIdMaladies()));
+        patient.setMaladies(maladies);
         return patientService.ajouterPatient(patient);
     }
 

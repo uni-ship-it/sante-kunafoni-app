@@ -26,13 +26,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        // ✅ 1. IGNORER AUTH ENDPOINTS
+        //  1. IGNORER AUTH ENDPOINTS
         if (request.getServletPath().startsWith("/api/auth")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // ✅ 2. HEADER JWT
+        // 2. HEADER JWT
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -41,11 +41,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         try {
-            // ✅ 3. EXTRACTION TOKEN
+            // 3. EXTRACTION TOKEN
             String token = authHeader.substring(7);
             String tel = jwtService.extractTel(token);
 
-            // ✅ 4. AUTH CONTEXT
+            // 4. AUTH CONTEXT
             if (tel != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
                 var userDetails = userDetailsService.loadUserByUsername(tel);
@@ -69,7 +69,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
         }
 
-        // ✅ 5. CONTINUER CHAÎNE
+        //  5. CONTINUER CHAÎNE
         filterChain.doFilter(request, response);
     }
 }
