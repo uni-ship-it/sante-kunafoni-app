@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,9 +18,18 @@ import java.util.Date;
 @PrimaryKeyJoinColumn(name = "idUtilisateur")
 public class Patient extends Utilisateur {
 
+    @ManyToMany()
+    @JoinTable(
+            name = "patient_maladie",
+            joinColumns = @JoinColumn(name = "id_maladie")
+    )
+    private Set<Maladie> maladies;
+
+
     private String localite;
     private Long age;
     private String etat;
     private String sexe;
     private Date periode;
+
 }
