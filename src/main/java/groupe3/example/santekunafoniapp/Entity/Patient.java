@@ -20,6 +20,7 @@ import java.util.Set;
 @PrimaryKeyJoinColumn(name = "idUtilisateur")
 public class Patient extends Utilisateur {
 
+    // pour joindre les deux tables
     @ManyToMany
     @JoinTable(
             name = "patient_maladie",
