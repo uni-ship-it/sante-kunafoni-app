@@ -20,7 +20,7 @@ public class MaladieController {
 
     private final MaladieServiceInterface maladieServiceInterface;
 
-    // ✅ @Autowired retiré : injection par constructeur suffisante
+    //  @Autowired retiré : injection par constructeur suffisante
     public MaladieController(MaladieServiceInterface maladieServiceInterface) {
         this.maladieServiceInterface = maladieServiceInterface;
     }
