@@ -10,7 +10,7 @@ public class PatientDTO {
     private String nom;
     private String prenom;
     private String tel;
-    private String motPass;
+    private String motpass;
     private String localite;
     private Long age;
     private String etat;

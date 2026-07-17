@@ -16,6 +16,7 @@ import java.util.List;
 @Tag(name = "Patients", description = "Gestion des comptes patients")
 @RestController
 @RequestMapping("/api/patients")
+@CrossOrigin(origins = "*")          // ← AJOUTE cette ligne (même style que l'AuthController)
 public class PatientController {
 
     private final PatientServiceInterface patientService;
@@ -35,7 +36,7 @@ public class PatientController {
     @PostMapping
     public Patient ajouterPatient(@RequestBody PatientDTO patientDTO) {
         Patient patient = new Patient();
-        patient.setMotpass(patientDTO.getMotPass());
+        patient.setMotpass(patientDTO.getMotpass());
         patient.setNom(patientDTO.getNom());
         patient.setPrenom(patientDTO.getPrenom());
         patient.setLocalite(patientDTO.getLocalite());
