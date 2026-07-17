@@ -35,7 +35,11 @@ public class SecurityConfig {
                                 "/api/**",
                                 "/utilisateurs/**"
                         ).permitAll()
-                        .anyRequest().authenticated()
+                         .anyRequest().permitAll()
+                        // TODO DICKO : SÉCURITÉ OUVERTE TEMPORAIREMENT pour le dev du front.
+                        // Remettre les requestMatchers + .anyRequest().authenticated()
+                        // quand le login Angular enverra le JWT !
+                        //.anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
