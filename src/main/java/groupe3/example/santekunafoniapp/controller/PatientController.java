@@ -22,6 +22,7 @@ import java.util.Set;
 @Tag(name = "Patients", description = "Gestion des comptes patients")
 @RestController
 @RequestMapping("/api/patients")
+@CrossOrigin(origins = "http://localhost:4200") // S'assure que le controleur accepte Angular
 public class PatientController {
 
     private final PatientServiceInterface patientService;

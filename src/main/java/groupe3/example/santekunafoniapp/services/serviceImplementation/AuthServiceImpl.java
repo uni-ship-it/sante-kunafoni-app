@@ -29,6 +29,8 @@ public class AuthServiceImpl implements AuthService {
                         HttpStatus.UNAUTHORIZED, "Utilisateur introuvable"
                 ));
 
+        System.out.println("user : " + user.getTel() + " , " + user.getPrenom());
+
         // 2. Vérifier mot de passe
         if (!passwordEncoder.matches(request.getMotpass(), user.getMotpass())) {
             throw new ResponseStatusException(
