@@ -18,6 +18,7 @@ import java.util.List;
 @Tag(name = "Traitements", description = "Gestion des traitements médicaux")
 @RestController
 @RequestMapping("/api/traitements")
+@CrossOrigin(origins = "http://localhost:4200") //  Autorise Angular à communiquer
 public class TraitementController {
 
 

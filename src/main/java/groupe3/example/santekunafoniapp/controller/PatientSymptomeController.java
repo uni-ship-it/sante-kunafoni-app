@@ -1,4 +1,4 @@
-package groupe3.example.santekunafoniapp.Controller;
+package groupe3.example.santekunafoniapp.controller;
 
 import groupe3.example.santekunafoniapp.Entity.PatientSymptome;
 import groupe3.example.santekunafoniapp.services.serviceInterface.PatientSymptomeServiceInterface;
@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/patient-symptomes")
+@CrossOrigin(origins = "http://localhost:4200") //  Autorise Angular à communiquer
 @Tag(
         name = "Patient-Symptôme",
         description = "Gestion des symptômes assignés aux patients"
@@ -101,4 +102,5 @@ public class PatientSymptomeController {
     public ResponseEntity<List<PatientSymptome>> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
+
 }

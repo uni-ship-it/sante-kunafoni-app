@@ -1,5 +1,6 @@
 package groupe3.example.santekunafoniapp.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public abstract class Utilisateur {
     private String nom;
     private String prenom;
     private String tel;
+    @JsonIgnore
     private String motpass;
 
     @Enumerated(EnumType.STRING)

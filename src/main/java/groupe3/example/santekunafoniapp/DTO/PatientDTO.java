@@ -12,6 +12,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PatientDTO {
+    private Long idUtilisateur;
+
     private String nom;
     private String prenom;
     private String tel;
