@@ -21,18 +21,20 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final CustomUserDetailsService userDetailsService;
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getServletPath();
+        return path.startsWith("/api/")
+                || path.startsWith("/utilisateurs/")
+                || path.startsWith("/swagger-ui")
+                || path.startsWith("/v3/api-docs");
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        //  1. IGNORER AUTH ENDPOINTS
-        if (request.getServletPath().startsWith("/api/auth")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
-        // 2. HEADER JWT
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -41,35 +43,22 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         }
 
         try {
-            // 3. EXTRACTION TOKEN
             String token = authHeader.substring(7);
             String tel = jwtService.extractTel(token);
 
-            // 4. AUTH CONTEXT
             if (tel != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
                 var userDetails = userDetailsService.loadUserByUsername(tel);
-
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
-                        );
-
+                                userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-
+                        new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
-
         } catch (Exception e) {
-            // ❗ IMPORTANT : ne jamais bloquer le login
             SecurityContextHolder.clearContext();
         }
 
-        //  5. CONTINUER CHAÎNE
         filterChain.doFilter(request, response);
     }
 }
