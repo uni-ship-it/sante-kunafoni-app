@@ -32,6 +32,8 @@ public abstract class Utilisateur {
         this.role = role;
     }
 
+    //hamath t'es beau !!
+
     //@OneToMany
     //List<Notification> notifications;
 }

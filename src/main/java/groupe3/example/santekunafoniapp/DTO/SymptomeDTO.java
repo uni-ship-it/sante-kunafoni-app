@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 public class SymptomeDTO {
     @Data
     public class Symptome{
@@ -14,5 +16,6 @@ public class SymptomeDTO {
         private Long  id;
         private String nom;
         private String description;
+        private LocalDateTime dateCreation;
     }
 }
