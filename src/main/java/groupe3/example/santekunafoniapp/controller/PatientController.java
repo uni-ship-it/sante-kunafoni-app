@@ -1,6 +1,5 @@
 package groupe3.example.santekunafoniapp.controller;
 
-import groupe3.example.santekunafoniapp.DTO.MaladieDTO;
 import groupe3.example.santekunafoniapp.DTO.PatientDTO;
 import groupe3.example.santekunafoniapp.Entity.Maladie;
 import groupe3.example.santekunafoniapp.Entity.Patient;
@@ -25,6 +24,7 @@ import java.util.Set;
 public class PatientController {
 
     private final PatientServiceInterface patientService;
+
     @Autowired
     private MaladieRepository maladieRepository;
 
@@ -54,11 +54,13 @@ public class PatientController {
         patient.setRole(Role.PATIENT);
         patient.setSexe(patientDTO.getSexe());
 
-        // Pour la liaison entre maladie et patient (Set pour créer une maladie et l'ajouter à la liste
-
-        Set<Maladie> maladies = new HashSet<>(
-                maladieRepository.findAllById(patientDTO.getIdMaladies()));
+        // Correction sécurisée du lien Patient <-> Maladie
+        Set<Maladie> maladies = new HashSet<>();
+        if (patientDTO.getIdMaladies() != null && !patientDTO.getIdMaladies().isEmpty()) {
+            maladies.addAll(maladieRepository.findAllById(patientDTO.getIdMaladies()));
+        }
         patient.setMaladies(maladies);
+
         return patientService.ajouterPatient(patient);
     }
 
