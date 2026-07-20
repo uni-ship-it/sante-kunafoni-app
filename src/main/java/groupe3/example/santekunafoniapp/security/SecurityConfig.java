@@ -10,82 +10,106 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-// IMPORTATION DES CLASSES CORS REQUISES :
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import java.util.Arrays;
+
 import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthFilter jwtAuthFilter;
 
+    /**
+     * Configuration temporaire :
+     * Toutes les routes sont accessibles.
+     * Pas de JWT pendant la phase de développement.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+                // Désactivation CSRF pour une API REST
                 .csrf(csrf -> csrf.disable())
-                // 1. AJOUT INDISPENSABLE : On active notre configuration CORS globale
+
+                // Activation CORS pour Angular
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        // 2. RECOMMANDÉ : Autoriser explicitement les requêtes "Preflight" OPTIONS de CORS
-                        .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
-
-                        // AJOUTEZ CETTE LIGNE : Autorise la création de compte sans être connecté
-                        .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/patients").permitAll()
-                         //Permission pour utiliser maladie
-
-                        .requestMatchers("/api/maladies/**").permitAll()
-                        .requestMatchers(
-                                "/api/auth/**",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**"
-                        ).permitAll()
-
-                        .anyRequest().authenticated()
+                // Pas de session côté serveur
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
+                // Autoriser toutes les requêtes temporairement
+                .authorizeHttpRequests(auth ->
+                        auth.anyRequest().permitAll()
+                );
+
 
         return http.build();
     }
 
-    // 2. Définition de la configuration CORS globale
+
+    /**
+     * Configuration CORS Angular
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // Autorise uniquement l'adresse de votre application Angular
-        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        configuration.setAllowedOrigins(
+                List.of("http://localhost:4200")
+        );
 
-        // Autorise les méthodes HTTP standards
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(
+                List.of(
+                        "GET",
+                        "POST",
+                        "PUT",
+                        "DELETE",
+                        "OPTIONS"
+                )
+        );
 
-        // Autorise les Headers nécessaires (Authorization pour le JWT et Content-Type pour le JSON)
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept"));
+        configuration.setAllowedHeaders(
+                List.of("*")
+        );
 
-        // Permet l'envoi de cookies ou d'en-têtes d'authentification si nécessaire
         configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        // Applique cette configuration à toutes les routes de l'API
-        source.registerCorsConfiguration("/**", configuration);
+
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration(
+                "/**",
+                configuration
+        );
+
         return source;
     }
 
+
+    /**
+     * Utilisé pour hasher les mots de passe
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return new BCryptPasswordEncoder();
     }
 
+
+    /**
+     * Gardé pour la future authentification JWT
+     */
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config
+    ) throws Exception {
+
         return config.getAuthenticationManager();
     }
 }
