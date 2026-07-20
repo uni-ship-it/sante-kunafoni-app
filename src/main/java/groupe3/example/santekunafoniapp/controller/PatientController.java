@@ -21,6 +21,7 @@ import java.util.Set;
 @Tag(name = "Patients", description = "Gestion des comptes patients")
 @RestController
 @RequestMapping("/api/patients")
+@CrossOrigin(origins = "*")
 public class PatientController {
 
     private final PatientServiceInterface patientService;
@@ -42,23 +43,27 @@ public class PatientController {
     })
     @PostMapping
     public Patient ajouterPatient(@RequestBody PatientDTO patientDTO) {
+
         Patient patient = new Patient();
+
+        // Correction
         patient.setMotpass(patientDTO.getMotPass());
+
         patient.setNom(patientDTO.getNom());
         patient.setPrenom(patientDTO.getPrenom());
+        patient.setTel(patientDTO.getTel());
         patient.setLocalite(patientDTO.getLocalite());
-        patient.setPeriode(patientDTO.getPeriode());
         patient.setAge(patientDTO.getAge());
         patient.setEtat(patientDTO.getEtat());
-        patient.setTel(patientDTO.getTel());
-        patient.setRole(Role.PATIENT);
         patient.setSexe(patientDTO.getSexe());
+        patient.setPeriode(patientDTO.getPeriode());
+        patient.setRole(Role.PATIENT);
 
-        // Correction sécurisée du lien Patient <-> Maladie
         Set<Maladie> maladies = new HashSet<>();
         if (patientDTO.getIdMaladies() != null && !patientDTO.getIdMaladies().isEmpty()) {
             maladies.addAll(maladieRepository.findAllById(patientDTO.getIdMaladies()));
         }
+
         patient.setMaladies(maladies);
 
         return patientService.ajouterPatient(patient);
