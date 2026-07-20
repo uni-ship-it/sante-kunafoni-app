@@ -44,7 +44,7 @@ public class PatientController {
     @PostMapping
     public Patient ajouterPatient(@RequestBody PatientDTO patientDTO) {
         Patient patient = new Patient();
-        patient.setMotpass(patientDTO.getMotPass());
+        patient.setMotpass(patientDTO.getMotpass());
         patient.setNom(patientDTO.getNom());
         patient.setPrenom(patientDTO.getPrenom());
         patient.setLocalite(patientDTO.getLocalite());
