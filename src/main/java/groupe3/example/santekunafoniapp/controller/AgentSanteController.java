@@ -14,7 +14,7 @@ import java.util.List;
 @Tag(name = "Agents de santé", description = "Gestion des agents de santé")
 @RestController
 @RequestMapping("/api/agents")
-@CrossOrigin(origins = "http://localhost:4200") // 🔥 Autorise Angular à communiquer
+@CrossOrigin(origins = "http://localhost:4200")
 public class AgentSanteController {
 
     private final AgentSanteService service;

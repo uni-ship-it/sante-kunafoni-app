@@ -54,6 +54,9 @@ public class PatientController {
         patient.setTel(patientDTO.getTel());
         patient.setRole(Role.PATIENT);
         patient.setSexe(patientDTO.getSexe());
+
+        // Pour la liaison entre maladie et patient (Set pour créer une maladie et l'ajouter à la liste
+
         Set<Maladie> maladies = new HashSet<>(
                 maladieRepository.findAllById(patientDTO.getIdMaladies()));
         patient.setMaladies(maladies);

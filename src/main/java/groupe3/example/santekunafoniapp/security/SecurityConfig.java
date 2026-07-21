@@ -3,6 +3,7 @@ package groupe3.example.santekunafoniapp.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,16 +21,20 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http
+                .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers(
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
                                 "/api/auth/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/api/patients"
-
+                                "/api/agents/**",
+                                "/api/notification/**",
+                                "/api/**",
+                                "/utilisateurs/**",
+                                "/api/patients/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
