@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 @Tag(name = "Patients", description = "Gestion des comptes patients")
 @RestController
 @RequestMapping("/api/patients")
-@CrossOrigin(origins = "http://localhost:4200") //  Autorise Angular à communiquer
+// @CrossOrigin(origins = "http://localhost:4200") // <--- SUPPRIMÉ pour éviter le conflit avec SecurityConfig
 public class PatientController {
 
     private final PatientServiceInterface patientService;
@@ -40,7 +41,6 @@ public class PatientController {
             @ApiResponse(responseCode = "200", description = "Patient créé avec succès"),
             @ApiResponse(responseCode = "400", description = "Données invalides")
     })
-
     @PostMapping
     public Patient ajouterPatient(@RequestBody PatientDTO patientDTO) {
         Patient patient = new Patient();
@@ -91,29 +91,5 @@ public class PatientController {
     @GetMapping("/{id}")
     public Patient afficherPatientParId(@PathVariable Long id) {
         return patientService.afficherPatientParId(id);
-
-    }//  URL correspondante au Service Angular : /api/patients/derniers
-
-    @GetMapping("/derniers")
-    public List<Patient> getDerniersPatients() {
-        return patientService.getDerniersPatients();
-    }
-
-    //  URL correspondante au Service Angular : /api/patients/count
-    @GetMapping("/count")
-    public Long nombrePatients() {
-        return patientService.nombrePatients();
-    }
-
-    //  URL correspondante au Service Angular : /api/patients/hommes
-    @GetMapping("/hommes")
-    public long compterHommes() {
-        return patientService.compterHommes();
-    }
-
-    //  URL correspondante au Service Angular : /api/patients/femmes
-    @GetMapping("/femmes")
-    public long compterFemmes() {
-        return patientService.compterFemmes();
     }
 }

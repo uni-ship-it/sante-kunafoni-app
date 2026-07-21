@@ -32,19 +32,6 @@ public class SecurityConfig {
         http
                 // Désactivation CSRF pour une API REST
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/auth/**",
-                                "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/api/agents/**",
-                                "/api/notification/**",
-                                "/api/**",
-                                "/utilisateurs/**",
-                                "/api/patients/**"
-                        ).permitAll()
-                        .anyRequest().authenticated()
 
                 // Activation CORS pour Angular
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
