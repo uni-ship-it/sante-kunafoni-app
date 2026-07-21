@@ -24,15 +24,15 @@ public class SwaggerConfig {
                                 .name("Groupe 3")
                                 .email("groupe3@example.com")
                         )
-                )
-                // 2. Active la protection par Token globalement sur les routes
-                .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
-                // 3. Configure l'option d'authentification Bearer / JWT dans Swagger
-                .components(new Components()
-                        .addSecuritySchemes("BearerAuth", new SecurityScheme()
-                                .name("BearerAuth")
-                                .type(SecurityScheme.Type.HTTP)
-                                .scheme("bearer")
-                                .bearerFormat("JWT")));
+                );
+//                // 2. Active la protection par Token globalement sur les routes
+//                .addSecurityItem(new SecurityRequirement().addList("BearerAuth"))
+//                // 3. Configure l'option d'authentification Bearer / JWT dans Swagger
+//                .components(new Components()
+//                        .addSecuritySchemes("BearerAuth", new SecurityScheme()
+//                                .name("BearerAuth")
+//                                .type(SecurityScheme.Type.HTTP)
+//                                .scheme("bearer")
+//                                .bearerFormat("JWT")));
     }
 }

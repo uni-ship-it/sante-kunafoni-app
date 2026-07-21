@@ -1,6 +1,5 @@
 package groupe3.example.santekunafoniapp.controller;
 
-import groupe3.example.santekunafoniapp.DTO.MaladieDTO;
 import groupe3.example.santekunafoniapp.DTO.PatientDTO;
 import groupe3.example.santekunafoniapp.Entity.Maladie;
 import groupe3.example.santekunafoniapp.Entity.Patient;
@@ -22,10 +21,11 @@ import java.util.Set;
 @Tag(name = "Patients", description = "Gestion des comptes patients")
 @RestController
 @RequestMapping("/api/patients")
-@CrossOrigin(origins = "*")          // ← AJOUTE cette ligne (même style que l'AuthController)
+@CrossOrigin(origins = "*")
 public class PatientController {
 
     private final PatientServiceInterface patientService;
+
     @Autowired
     private MaladieRepository maladieRepository;
 
@@ -43,23 +43,29 @@ public class PatientController {
     })
     @PostMapping
     public Patient ajouterPatient(@RequestBody PatientDTO patientDTO) {
+
         Patient patient = new Patient();
-        patient.setMotpass(patientDTO.getMotpass());
+
+        // Correction
+        patient.setMotpass(patientDTO.getMotPass());
+
         patient.setNom(patientDTO.getNom());
         patient.setPrenom(patientDTO.getPrenom());
+        patient.setTel(patientDTO.getTel());
         patient.setLocalite(patientDTO.getLocalite());
-        patient.setPeriode(patientDTO.getPeriode());
         patient.setAge(patientDTO.getAge());
         patient.setEtat(patientDTO.getEtat());
-        patient.setTel(patientDTO.getTel());
-        patient.setRole(Role.PATIENT);
         patient.setSexe(patientDTO.getSexe());
+        patient.setPeriode(patientDTO.getPeriode());
+        patient.setRole(Role.PATIENT);
 
-        // Pour la liaison entre maladie et patient (Set pour créer une maladie et l'ajouter à la liste
+        Set<Maladie> maladies = new HashSet<>();
+        if (patientDTO.getIdMaladies() != null && !patientDTO.getIdMaladies().isEmpty()) {
+            maladies.addAll(maladieRepository.findAllById(patientDTO.getIdMaladies()));
+        }
 
-        Set<Maladie> maladies = new HashSet<>(
-                maladieRepository.findAllById(patientDTO.getIdMaladies()));
         patient.setMaladies(maladies);
+
         return patientService.ajouterPatient(patient);
     }
 
