@@ -9,3 +9,4 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     Optional<Patient> findByTel(String tel);
 
 }
+
