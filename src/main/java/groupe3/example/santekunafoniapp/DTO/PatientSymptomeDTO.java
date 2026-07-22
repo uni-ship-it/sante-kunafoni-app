@@ -9,6 +9,8 @@ public class PatientSymptomeDTO {
     public PatientSymptomeDTO(Long idPatient, Long idSymptome) {
         this.idPatient = idPatient;
         this.idSymptome = idSymptome;
+
+
     }
 
     public Long getIdPatient() { return idPatient; }
