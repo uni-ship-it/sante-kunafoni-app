@@ -29,11 +29,7 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/swagger-ui/**",
-                                "/v3/api-docs/**",
-                                "/api/agents/**",
-                                "/api/notification/**",
-                                "/api/**",
-                                "/utilisateurs/**"
+                                "/v3/api-docs/**"
                         ).permitAll()
                          .anyRequest().permitAll()
                         // TODO DICKO : SÉCURITÉ OUVERTE TEMPORAIREMENT pour le dev du front.
