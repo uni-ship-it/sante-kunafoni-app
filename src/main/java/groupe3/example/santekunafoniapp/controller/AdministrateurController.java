@@ -1,6 +1,7 @@
 package groupe3.example.santekunafoniapp.controller;
 
-import groupe3.example.santekunafoniapp.DTO.AdministrateurDTO;
+import groupe3.example.santekunafoniapp.DTO.AdministrateurRequestDTO;
+import groupe3.example.santekunafoniapp.DTO.AdministrateurResponseDTO;
 import groupe3.example.santekunafoniapp.services.serviceInterface.AdministrateurServiceInterface;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +32,7 @@ public class AdministrateurController {
             }
             )
     @PostMapping
-    public String ajouter(@RequestBody AdministrateurDTO dto){
+    public String ajouter(@RequestBody AdministrateurRequestDTO dto){
         administrateurService.ajouter(dto);
         return "ajouté avec succès";
     }
@@ -45,7 +46,7 @@ public class AdministrateurController {
             }
     )
     @GetMapping
-    public List<AdministrateurDTO> afficherTous(){
+    public List<AdministrateurResponseDTO> afficherTous(){
         return administrateurService.afficherTous();
     }
 
@@ -58,7 +59,7 @@ public class AdministrateurController {
             }
     )
     @GetMapping("/{id}")
-    public AdministrateurDTO afficherParId(@PathVariable Long id){
+    public AdministrateurResponseDTO afficherParId(@PathVariable Long id){
          return administrateurService.afficherParId(id);
     }
     @Operation(summary = "Modifier un administrateur")
@@ -69,9 +70,9 @@ public class AdministrateurController {
     @PutMapping("/{id}")
     public String modifier(
             @PathVariable Long id,
-            @RequestBody AdministrateurDTO dto){
+            @RequestBody AdministrateurRequestDTO dto){
 
-         administrateurService.modifier(id,dto);
+
          return "Modification réussie";
     }
 
