@@ -59,10 +59,11 @@ public class SecurityConfig {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
+        //Autorise uniquement le serveur Angular de développement à interroger l'API
         configuration.setAllowedOrigins(
                 List.of("http://localhost:4200")
         );
-
+        //Autorise les méthodes HTTP principales
         configuration.setAllowedMethods(
                 List.of(
                         "GET",
@@ -76,7 +77,7 @@ public class SecurityConfig {
         configuration.setAllowedHeaders(
                 List.of("*")
         );
-
+       // Permet l'envoi de cookies ou d'informations d'identification sécurisées entre le front et le back
         configuration.setAllowCredentials(true);
 
 
