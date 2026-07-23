@@ -43,6 +43,9 @@ public class PatientController {
     })
     @PostMapping
     public Patient ajouterPatient(@RequestBody PatientDTO patientDTO) {
+        System.out.println("mot de passe: "+ patientDTO.getMotpass());
+        System.out.println("NOM: "+ patientDTO.getNom());
+        System.out.println("prenom: "+ patientDTO.getPrenom());
         Patient patient = new Patient();
         patient.setMotpass(patientDTO.getMotpass());
         patient.setNom(patientDTO.getNom());
@@ -54,6 +57,8 @@ public class PatientController {
         patient.setTel(patientDTO.getTel());
         patient.setRole(Role.PATIENT);
         patient.setSexe(patientDTO.getSexe());
+
+        System.out.println("patient mot de passe: "+ patient.getMotpass());
 
         // GESTION SÉCURISÉE DES MALADIES
         Set<Maladie> maladies = new HashSet<>();
