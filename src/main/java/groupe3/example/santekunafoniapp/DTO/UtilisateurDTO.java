@@ -9,6 +9,6 @@ public class UtilisateurDTO {
     private String nom;
     private String prenom;
     private String tel;
-    private String motPass;
+    private String motpass;
     private Role role;
 }
