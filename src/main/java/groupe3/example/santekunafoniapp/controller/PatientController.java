@@ -1,6 +1,5 @@
 package groupe3.example.santekunafoniapp.controller;
 
-import groupe3.example.santekunafoniapp.DTO.MaladieDTO;
 import groupe3.example.santekunafoniapp.DTO.PatientDTO;
 import groupe3.example.santekunafoniapp.Entity.Maladie;
 import groupe3.example.santekunafoniapp.Entity.Patient;
@@ -22,9 +21,11 @@ import java.util.Set;
 @Tag(name = "Patients", description = "Gestion des comptes patients")
 @RestController
 @RequestMapping("/api/patients")
+// @CrossOrigin(origins = "http://localhost:4200") // <--- SUPPRIMÉ pour éviter le conflit avec SecurityConfig
 public class PatientController {
 
     private final PatientServiceInterface patientService;
+
     @Autowired
     private MaladieRepository maladieRepository;
 
@@ -42,6 +43,9 @@ public class PatientController {
     })
     @PostMapping
     public Patient ajouterPatient(@RequestBody PatientDTO patientDTO) {
+        System.out.println("mot de passe: "+ patientDTO.getMotPass());
+        System.out.println("NOM: "+ patientDTO.getNom());
+        System.out.println("prenom: "+ patientDTO.getPrenom());
         Patient patient = new Patient();
         patient.setMotpass(patientDTO.getMotPass());
         patient.setNom(patientDTO.getNom());
@@ -54,70 +58,43 @@ public class PatientController {
         patient.setRole(Role.PATIENT);
         patient.setSexe(patientDTO.getSexe());
 
-        // Pour la liaison entre maladie et patient (Set pour créer une maladie et l'ajouter à la liste
+        System.out.println("patient mot de passe: "+ patient.getMotpass());
 
-        Set<Maladie> maladies = new HashSet<>(
-                maladieRepository.findAllById(patientDTO.getIdMaladies()));
+        // GESTION SÉCURISÉE DES MALADIES
+        Set<Maladie> maladies = new HashSet<>();
+        if (patientDTO.getIdMaladies() != null && !patientDTO.getIdMaladies().isEmpty()) {
+            maladies.addAll(maladieRepository.findAllById(patientDTO.getIdMaladies()));
+        }
         patient.setMaladies(maladies);
+
         return patientService.ajouterPatient(patient);
     }
 
-    @Operation(
-            summary = "Modifier un patient",
-            description = "Met à jour les informations d'un patient existant."
-    )
+    @Operation(summary = "Modifier un patient", description = "Met à jour les informations d'un patient existant.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Patient modifié avec succès"),
             @ApiResponse(responseCode = "404", description = "Patient non trouvé")
     })
     @PutMapping("/{id}")
-    public Patient modifierPatient(
-            @Parameter(description = "ID du patient à modifier", required = true)
-            @PathVariable Long id,
-            @RequestBody Patient patient
-    ) {
+    public Patient modifierPatient(@PathVariable Long id, @RequestBody Patient patient) {
         return patientService.modifierPatient(id, patient);
     }
 
-    @Operation(
-            summary = "Supprimer un patient",
-            description = "Supprime définitivement un patient à partir de son identifiant."
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Patient supprimé avec succès"),
-            @ApiResponse(responseCode = "404", description = "Patient non trouvé")
-    })
+    @Operation(summary = "Supprimer un patient", description = "Supprime définitivement un patient.")
     @DeleteMapping("/{id}")
-    public void supprimerPatient(
-            @Parameter(description = "ID du patient à supprimer", required = true)
-            @PathVariable Long id
-    ) {
+    public void supprimerPatient(@PathVariable Long id) {
         patientService.supprimerPatient(id);
     }
 
-    @Operation(
-            summary = "Lister tous les patients",
-            description = "Retourne la liste complète de tous les patients enregistrés."
-    )
-    @ApiResponse(responseCode = "200", description = "Liste retournée avec succès")
+    @Operation(summary = "Lister tous les patients")
     @GetMapping
     public List<Patient> afficherTousLesPatients() {
         return patientService.afficherTousLesPatients();
     }
 
-    @Operation(
-            summary = "Récupérer un patient par ID",
-            description = "Retourne les détails d'un patient à partir de son identifiant."
-    )
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Patient trouvé"),
-            @ApiResponse(responseCode = "404", description = "Patient non trouvé")
-    })
+    @Operation(summary = "Récupérer un patient par ID")
     @GetMapping("/{id}")
-    public Patient afficherPatientParId(
-            @Parameter(description = "ID du patient", required = true)
-            @PathVariable Long id
-    ) {
+    public Patient afficherPatientParId(@PathVariable Long id) {
         return patientService.afficherPatientParId(id);
     }
 }

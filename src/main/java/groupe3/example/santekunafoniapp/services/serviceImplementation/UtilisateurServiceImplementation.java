@@ -25,6 +25,7 @@ public class UtilisateurServiceImplementation implements UtilisateurServiceInter
 
     @Override
     public void addUtilisateur(UtilisateurDTO uDTO) {
+        System.out.println("donnees recu "+ uDTO.getMotpass());
 
         Utilisateur utilisateur;
 
@@ -39,8 +40,9 @@ public class UtilisateurServiceImplementation implements UtilisateurServiceInter
         utilisateur.setNom(uDTO.getNom());
         utilisateur.setPrenom(uDTO.getPrenom());
         utilisateur.setTel(uDTO.getTel());
-        utilisateur.setMotpass(uDTO.getMotPass());
+        utilisateur.setMotpass(uDTO.getMotpass());
         utilisateur.setRole(uDTO.getRole());
+        System.out.println("utilis recu "+ utilisateur.getMotpass());
 
         utilisateurRepository.save(utilisateur);
     }
@@ -61,7 +63,7 @@ public class UtilisateurServiceImplementation implements UtilisateurServiceInter
             addingUtilisateur.setNom(uDTO.getNom());
             addingUtilisateur.setPrenom(uDTO.getPrenom());
             addingUtilisateur.setTel(uDTO.getTel());
-            addingUtilisateur.setMotpass(uDTO.getMotPass());
+            addingUtilisateur.setMotpass(uDTO.getMotpass());
             addingUtilisateur.setRole(uDTO.getRole());
 
             utilisateurRepository.save(addingUtilisateur);

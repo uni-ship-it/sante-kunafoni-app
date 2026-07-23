@@ -33,7 +33,6 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/api/agents/**",
                                 "/api/notification/**",
-                                "/api/symptomes/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
                         .anyRequest().authenticated()
