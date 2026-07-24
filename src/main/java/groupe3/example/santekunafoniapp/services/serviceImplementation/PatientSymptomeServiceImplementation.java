@@ -34,6 +34,7 @@ public class PatientSymptomeServiceImplementation implements PatientSymptomeServ
         if (patientSymptomeRepository.existsByPatientAndSymptome(idPatient, idSymptome)) {
             throw new RuntimeException("Ce symptôme est déjà assigné à ce patient");
         }
+
         Patient patient = patientRepository.findById(idPatient)
                 .orElseThrow(() -> new RuntimeException("Patient non trouvé"));
 

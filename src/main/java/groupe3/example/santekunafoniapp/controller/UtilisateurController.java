@@ -18,7 +18,6 @@ import java.util.Optional;
 @Tag(name = "Utilisateurs", description = "Gestion des comptes utilisateurs")
 @RestController
 @RequestMapping("/api/utilisateurs")
-@CrossOrigin(origins = "http://localhost:4200") //  Autorise Angular à communiquer
 public class UtilisateurController {
 
     private final UtilisateurServiceInterface utilisateurService;

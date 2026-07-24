@@ -14,10 +14,4 @@ public interface PatientServiceInterface {
     List<Patient> afficherTousLesPatients();
 
     Patient afficherPatientParId(Long id);
-      // ===== Dashboard =====
-    Long nombrePatients();
-    List<Patient> getDerniersPatients();
-    long compterHommes();
-
-    long compterFemmes();
 }
