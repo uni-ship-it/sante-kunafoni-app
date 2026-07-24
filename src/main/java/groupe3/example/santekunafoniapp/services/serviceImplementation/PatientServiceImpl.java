@@ -72,6 +72,7 @@ public List<Patient> getDerniersPatients() {
 }
 @Override
 public long compterHommes() {
+
     return patientRepository.countBySexe("Homme");
 }
 
