@@ -3,6 +3,7 @@ package groupe3.example.santekunafoniapp.security;
 import groupe3.example.santekunafoniapp.Entity.Utilisateur;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -38,7 +39,7 @@ public class JwtService {
                 .getSubject();
     }
 
-    public boolean isTokenValid(String token) {
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         try {
             Jwts.parser()
                     .verifyWith(getKey())

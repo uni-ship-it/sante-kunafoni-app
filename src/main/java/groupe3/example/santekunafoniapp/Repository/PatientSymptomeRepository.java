@@ -23,11 +23,4 @@ public interface PatientSymptomeRepository extends JpaRepository<PatientSymptome
     List<PatientSymptome> findByPatientIdUtilisateur(Long patientId);
 
     List<PatientSymptome> findBySymptomeId(Long symptomeId);
-    @Query("""
-                SELECT ps.symptome.nom, COUNT(ps)
-                FROM PatientSymptome ps
-                GROUP BY ps.symptome.nom
-                ORDER BY COUNT(ps) DESC
-                    """)
-                List<Object[]> getTopSymptomes();
 }
