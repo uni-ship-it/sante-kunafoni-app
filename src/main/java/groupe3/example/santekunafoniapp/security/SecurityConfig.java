@@ -44,6 +44,7 @@ public class SecurityConfig {
                                 "/api/patients/**",
 
                                 "/api/agents/**",
+                                "/api/administrateurs/**",
 
                                 "/api/notification/**",
 
