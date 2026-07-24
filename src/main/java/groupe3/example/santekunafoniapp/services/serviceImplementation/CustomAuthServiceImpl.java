@@ -77,14 +77,26 @@ public class CustomAuthServiceImpl implements CustomAuthService {
         // Recherche agent santé
         // =========================
 
+        // =========================
+// Recherche agent santé
+// =========================
+
         Optional<AgentSante> agentOpt = agentSanteRepository.findByTel(tel);
 
-        if (agentOpt.isPresent()) {
-
+        if(agentOpt.isPresent()) {
             AgentSante agent = agentOpt.get();
 
-            if (passwordEncoder.matches(motpass, agent.getMotpass())) {
+            // --- LIGNES DE TEST ---
+            System.out.println("=== TEST CONNEXION AGENT ===");
+            System.out.println("Téléphone cherché : " + tel);
+            System.out.println("Mot de passe saisi (clair) : " + motpass);
+            System.out.println("Hash récupéré en BDD : " + agent.getMotpass());
 
+            boolean match = passwordEncoder.matches(motpass, agent.getMotpass());
+            System.out.println("Résultat du match : " + match);
+            // -----------------------
+
+            if(match) {
                 return new CustomLoginResponse(
                         agent.getIdUtilisateur(),
                         agent.getTel(),
