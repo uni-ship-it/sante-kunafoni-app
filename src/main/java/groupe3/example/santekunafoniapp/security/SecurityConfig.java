@@ -40,7 +40,7 @@ public class SecurityConfig {
                                 "/api/patients/**",
                                 "/swagger-ui/**",
 
-
+                                "/api/**", //  Rétablit l'accès public pour le Dashboard Angular
                                 "/api/patients/**",
 
                                 "/api/agents/**",
