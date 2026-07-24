@@ -39,44 +39,39 @@ public class CustomAuthServiceImpl implements CustomAuthService {
     }
 
 
-
     @Override
-    public CustomLoginResponse verifierAuthentification(
-            String tel,
-            String motpass
-    ) {
+    public CustomLoginResponse verifierAuthentification(String tel, String motpass) {
 
+        System.out.println("======================================");
+        System.out.println("Téléphone reçu : " + tel);
 
-        // =========================
-        // Recherche patient
-        // =========================
+        Optional<Patient> patientOpt = patientRepository.findByTel(tel);
 
-        Optional<Patient> patientOpt =
-                patientRepository.findByTel(tel);
-
-
-        if(patientOpt.isPresent()) {
+        if (patientOpt.isPresent()) {
 
             Patient patient = patientOpt.get();
 
+            System.out.println("Patient trouvé : " + patient.getNom());
+            System.out.println("Mot de passe en base : " + patient.getMotpass());
 
-            if(passwordEncoder.matches(
+            boolean ok = passwordEncoder.matches(
                     motpass,
                     patient.getMotpass()
-            )) {
+            );
 
+            System.out.println("Mot de passe correct ? " + ok);
 
+            if (ok) {
                 return new CustomLoginResponse(
                         patient.getIdUtilisateur(),
                         patient.getTel(),
                         patient.getNom(),
                         "PATIENT"
                 );
-
             }
+        } else {
+            System.out.println("Aucun patient trouvé avec ce téléphone.");
         }
-
-
 
         // =========================
         // Recherche agent santé
@@ -111,26 +106,17 @@ public class CustomAuthServiceImpl implements CustomAuthService {
             }
         }
 
-
-
         // =========================
         // Recherche administrateur
         // =========================
 
-        Optional<Administrateur> adminOpt =
-                administrateurRepository.findByTel(tel);
+        Optional<Administrateur> adminOpt = administrateurRepository.findByTel(tel);
 
-
-        if(adminOpt.isPresent()) {
+        if (adminOpt.isPresent()) {
 
             Administrateur admin = adminOpt.get();
 
-
-            if(passwordEncoder.matches(
-                    motpass,
-                    admin.getMotpass()
-            )) {
-
+            if (passwordEncoder.matches(motpass, admin.getMotpass())) {
 
                 return new CustomLoginResponse(
                         admin.getIdUtilisateur(),
@@ -138,16 +124,11 @@ public class CustomAuthServiceImpl implements CustomAuthService {
                         admin.getNom(),
                         "ADMIN"
                 );
-
             }
         }
 
+        System.out.println("Échec de l'authentification.");
 
-
-        throw new RuntimeException(
-                "Téléphone ou mot de passe incorrect"
-        );
-
+        throw new RuntimeException("Téléphone ou mot de passe incorrect");
     }
-
 }

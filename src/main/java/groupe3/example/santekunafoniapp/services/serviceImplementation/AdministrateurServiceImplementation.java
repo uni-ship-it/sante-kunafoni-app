@@ -1,7 +1,8 @@
 package groupe3.example.santekunafoniapp.services.serviceImplementation;
 
 
-import groupe3.example.santekunafoniapp.DTO.AdministrateurDTO;
+import groupe3.example.santekunafoniapp.DTO.AdministrateurRequestDTO;
+import groupe3.example.santekunafoniapp.DTO.AdministrateurResponseDTO;
 import groupe3.example.santekunafoniapp.Entity.Administrateur;
 import groupe3.example.santekunafoniapp.Entity.Role;
 import groupe3.example.santekunafoniapp.Repository.AdministrateurRepository;
@@ -14,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -32,10 +32,8 @@ public class AdministrateurServiceImplementation
         this.repository = repository;
     }
 
-
-
     @Override
-    public  String ajouter(AdministrateurDTO dto){
+    public  String ajouter(AdministrateurRequestDTO dto){
 
 
         Administrateur admin = new Administrateur();
@@ -48,16 +46,12 @@ public class AdministrateurServiceImplementation
         admin.setRole(Role.valueOf(dto.getRole()));
 
         repository.save(admin);
-        return "Ajouté avec succès";
-
-
+        return "Admin ajouté avec succès";
     }
 
 
-
     @Override
-    public AdministrateurDTO afficherParId(Long id){
-
+    public AdministrateurResponseDTO afficherParId(Long id){
 
         Administrateur admin =
                 repository.findById(id)
@@ -66,28 +60,29 @@ public class AdministrateurServiceImplementation
                 "Administrateur introuvable"
         )
                         );
-
-
-        return convertirDTO(admin);
+        return convertirEnResponseDTO(admin);
     }
 
     @Override
-    public List<AdministrateurDTO> afficherTous(){
+    public List<AdministrateurResponseDTO> afficherTous(){
 
 
          return repository.findAll()
                 .stream()
-                .map(this::convertirDTO)
+                .map(this::convertirEnResponseDTO)
                 .toList();
     }
 
     @Override
-    public String modifier(Long id, AdministrateurDTO dto){
+    public String modifier(Long id, AdministrateurRequestDTO dto){
 
         Administrateur admin =
                 repository.findById(id)
-                        .orElseThrow(
-                                ()-> new RuntimeException("Administrateur introuvable")
+                        .orElseThrow(() ->
+                                new ResponseStatusException(
+                                        HttpStatus.NOT_FOUND,
+                                        "Administrateur introuvable"
+                                )
                         );
 
         admin.setNom(dto.getNom());
@@ -97,33 +92,33 @@ public class AdministrateurServiceImplementation
         admin.setMotpass(dto.getMotpass());
         admin.setRole(Role.valueOf(dto.getRole()));
 
-        convertirDTO(repository.save(admin));
-         return "Mofification reussié";
+        repository.save(admin);
+         return "Mofification réussie";
 
     }
 
     @Override
     public String supprimer(Long id){
 
-        repository.deleteById(id);
-        return "La Suppression a été affectuer";
+        Administrateur admin = repository.findById(id)
+                .orElseThrow(() ->
+                        new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Administrateur introuvable"));
+
+        repository.delete(admin);
+        return "La Suppression a été affectué avec succès";
 
     }
 
 
-    private AdministrateurDTO convertirDTO(Administrateur admin){
-
-
-        AdministrateurDTO dto = new AdministrateurDTO();
-
+    private AdministrateurResponseDTO convertirEnResponseDTO(Administrateur admin){
+        AdministrateurResponseDTO dto = new AdministrateurResponseDTO();
+        dto.setIdUtilisateur(admin.getIdUtilisateur());
         dto.setNom(admin.getNom());
-
         dto.setPrenom(admin.getPrenom());
-
         dto.setEmail(admin.getEmail());
         dto.setTel(admin.getTel());
-        dto.setMotpass(admin.getMotpass());
-
         if (admin.getRole() != null) {
             dto.setRole(admin.getRole().name());
         } else {
