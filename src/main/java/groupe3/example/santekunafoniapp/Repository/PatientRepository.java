@@ -8,4 +8,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
 
     Optional<Patient> findByTel(String tel);
 
+public interface PatientRepository extends JpaRepository<Patient, Long> {
+    List<Patient> findTop5ByOrderByIdUtilisateurDesc();
+
+    long countBySexe(String sexe);
 }
