@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminDashboardDTO {
+public class DashboardStatsDTO {
     private long totalAgentsSante;
     private long totalPatients;
-    private long totalAlertes;
+    private long totalNotifications;
 }
