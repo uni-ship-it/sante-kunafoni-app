@@ -30,6 +30,14 @@ public class NotificationController {
         return service.getAllNotifications();
     }
 
+    // ── GET NOTIFICATIONS SYSTÈME (AJOUTÉ) ────────────────────
+    @Operation(summary = "Lister les notifications système (globales)")
+    @ApiResponse(responseCode = "200", description = "Liste des notifications système retournée")
+    @GetMapping("/systeme")
+    public List<Notification> getNotificationsSysteme() {
+        return service.getNotificationsSysteme();
+    }
+
     // ── GET PAR UTILISATEUR ───────────────────────────────────
     @Operation(summary = "Lister les notifications d'un utilisateur")
     @GetMapping("/utilisateur/{userId}")
