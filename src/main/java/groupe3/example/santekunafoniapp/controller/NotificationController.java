@@ -64,6 +64,18 @@ public class NotificationController {
         }
     }
 
+    // MÉTHODE DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> supprimerNotification(@PathVariable Long id) {
+        try {
+            service.supprimerNotification(id);
+            return ResponseEntity.ok("Notification supprimée avec succès.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
+
     // ── POST VÉRIFICATION ÉPIDÉMIE AUTOMATIQUE ────────────────
     @Operation(summary = "Vérifier le risque d'épidémie")
     @PostMapping("/verifier-epidemie/{idMaladie}")
