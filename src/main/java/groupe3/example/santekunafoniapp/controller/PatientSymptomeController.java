@@ -1,4 +1,4 @@
-package groupe3.example.santekunafoniapp.Controller;
+package groupe3.example.santekunafoniapp.controller;
 
 import groupe3.example.santekunafoniapp.Entity.PatientSymptome;
 import groupe3.example.santekunafoniapp.services.serviceInterface.PatientSymptomeServiceInterface;

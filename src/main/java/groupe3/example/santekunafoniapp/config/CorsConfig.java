@@ -20,13 +20,13 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // ✅ Origines autorisées (version plus complète)
+        // Origines autorisées (version plus complète)
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:4200",
                 "http://127.0.0.1:4200"
         ));
 
-        // ✅ Méthodes HTTP autorisées
+        // Méthodes HTTP autorisées
         configuration.setAllowedMethods(Arrays.asList(
                 "GET",
                 "POST",
@@ -35,13 +35,13 @@ public class CorsConfig {
                 "OPTIONS"
         ));
 
-        // ✅ Headers autorisés
+        // Headers autorisés
         configuration.setAllowedHeaders(Arrays.asList("*"));
 
-        // ✅ Autoriser les cookies / authentification
+        //Autoriser les cookies / authentification
         configuration.setAllowCredentials(true);
 
-        // ✅ Durée de vie max du cache CORS (optionnel)
+        // Durée de vie max du cache CORS (optionnel)
         configuration.setMaxAge(3600L);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
