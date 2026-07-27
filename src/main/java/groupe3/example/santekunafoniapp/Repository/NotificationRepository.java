@@ -4,23 +4,24 @@ import groupe3.example.santekunafoniapp.Entity.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-    // Toutes les notifications triées par date (plus récente en premier)
+    // RECHERCHER LES ALERTES PAR TITRE ET DATE
+    List<Notification> findByTitreAndDatePublicationAfter(
+            String titre,
+            LocalDateTime date
+    );
+
+    // TOUTES LES NOTIFICATIONS TRIÉES PAR DATE
     List<Notification> findAllByOrderByDatePublicationDesc();
 
-    // Notifications d'un utilisateur triées par date
+    // NOTIFICATIONS D'UN UTILISATEUR TRIÉES
     List<Notification> findByUtilisateur_IdUtilisateurOrderByDatePublicationDesc(Long userId);
 
-    // Notifications système (sans utilisateur) triées par date
+    // NOTIFICATIONS SYSTÈME
     List<Notification> findByUtilisateurIsNullOrderByDatePublicationDesc();
-
-    //(Optionnel) Compter les notifications non lues d'un utilisateur
-    long countByUtilisateur_IdUtilisateurAndLueFalse(Long userId);
-
-    //Compter les notifications système non lues
-    long countByUtilisateurIsNullAndLueFalse();
 }

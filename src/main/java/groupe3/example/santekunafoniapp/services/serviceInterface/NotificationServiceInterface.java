@@ -18,4 +18,7 @@ public interface NotificationServiceInterface {
 
     // Alerte automatique — déclenché quand seuil 30 cas / 7 jours dépassé
     void verifierEpidemie(Long idMaladie);
+
+    // Supprimer une notification
+    void supprimerNotification(Long id);
 }
