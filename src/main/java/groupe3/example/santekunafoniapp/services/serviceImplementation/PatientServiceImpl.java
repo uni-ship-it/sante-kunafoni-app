@@ -43,6 +43,7 @@ public class PatientServiceImpl implements PatientServiceInterface {
         patientExistant.setSexe(patient.getSexe());
         patientExistant.setTel(patient.getTel());
         patientExistant.setPeriode(patient.getPeriode());
+        patientExistant.setMaladies(patient.getMaladies());
 
         // 4. HACHAGE ÉGALEMENT SI LE MOT DE PASSE EST MODIFIÉ
         if (patient.getMotpass() != null && !patient.getMotpass().isEmpty()) {
@@ -70,4 +71,25 @@ public class PatientServiceImpl implements PatientServiceInterface {
         return patientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Patient introuvable"));
     }
+       // ===== Dashboard =====
+    @Override
+public Long nombrePatients() {
+
+    return patientRepository.count();
+
+}
+@Override
+public List<Patient> getDerniersPatients() {
+    return patientRepository.findTop5ByOrderByIdUtilisateurDesc();
+}
+@Override
+public long compterHommes() {
+
+    return patientRepository.countBySexe("Homme");
+}
+
+@Override
+public long compterFemmes() {
+    return patientRepository.countBySexe("Femme");
+}
 }

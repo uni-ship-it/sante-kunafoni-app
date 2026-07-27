@@ -11,6 +11,7 @@ public interface NotificationServiceInterface {
     // Récupération
     List<Notification> getAllNotifications();
     List<Notification> getNotificationsByUtilisateur(Long userId);
+    List<Notification> getNotificationsSysteme();  // ✅ Notifications système
 
     // Marquer comme lue
     void marquerCommeLue(Long id);
