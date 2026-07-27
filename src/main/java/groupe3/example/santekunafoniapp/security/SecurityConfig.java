@@ -41,6 +41,7 @@ public class SecurityConfig {
 
                                 "/api/**", //  Rétablit l'accès public pour le Dashboard Angular
                                 "/api/patients/**",
+                                "/api/administrateurs/**",
 
                                 "/api/agents/**",
                                 "/api/administrateurs/**",
@@ -52,7 +53,6 @@ public class SecurityConfig {
                                 "/swagger-ui.html",
 
                                 "/v3/api-docs/**"
-
                         ).permitAll()
 
                         .anyRequest().authenticated()
