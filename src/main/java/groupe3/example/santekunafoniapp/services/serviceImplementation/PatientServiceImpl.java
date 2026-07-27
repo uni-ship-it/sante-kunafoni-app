@@ -43,6 +43,7 @@ public class PatientServiceImpl implements PatientServiceInterface {
         patientExistant.setSexe(patient.getSexe());
         patientExistant.setTel(patient.getTel());
         patientExistant.setPeriode(patient.getPeriode());
+        patientExistant.setMaladies(patient.getMaladies());
 
         // 4. HACHAGE ÉGALEMENT SI LE MOT DE PASSE EST MODIFIÉ
         if (patient.getMotpass() != null && !patient.getMotpass().isEmpty()) {
@@ -84,11 +85,11 @@ public List<Patient> getDerniersPatients() {
 @Override
 public long compterHommes() {
 
-    return patientRepository.countBySexe("Homme");
+    return patientRepository.countBySexe("M");
 }
 
 @Override
 public long compterFemmes() {
-    return patientRepository.countBySexe("Femme");
+    return patientRepository.countBySexe("F");
 }
 }

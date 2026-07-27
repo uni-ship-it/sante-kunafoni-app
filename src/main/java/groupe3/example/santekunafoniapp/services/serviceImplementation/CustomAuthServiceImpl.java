@@ -70,16 +70,13 @@ public class CustomAuthServiceImpl implements CustomAuthService {
                 );
             }
         } else {
-            System.out.println("Aucun patient trouvé avec ce téléphone.");
+            System.out.println("Ce numéro n'est PAS un patient. On cherche dans les agents...");
         }
 
-        // =========================
-        // Recherche agent santé
-        // =========================
 
         // =========================
-// Recherche agent santé
-// =========================
+         // Recherche agent santé
+        // =========================
 
         Optional<AgentSante> agentOpt = agentSanteRepository.findByTel(tel);
 

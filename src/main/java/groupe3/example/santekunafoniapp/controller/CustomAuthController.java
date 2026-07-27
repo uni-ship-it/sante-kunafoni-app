@@ -18,6 +18,7 @@ public class CustomAuthController {
 
     @PostMapping("/connexion")
     public ResponseEntity<?> connexion(@RequestBody CustomLoginRequest loginRequest) {
+        System.out.println(">>> REQUÊTE REÇUE DANS LE CONTRÔLEUR <<<");
         try {
             // On transmet le téléphone et le mot de passe récupérés depuis le formulaire
             CustomLoginResponse response = customAuthService.verifierAuthentification(

@@ -75,7 +75,24 @@ public class PatientController {
             @ApiResponse(responseCode = "404", description = "Patient non trouvé")
     })
     @PutMapping("/{id}")
-    public Patient modifierPatient(@PathVariable Long id, @RequestBody Patient patient) {
+    public Patient modifierPatient(@PathVariable Long id, @RequestBody PatientDTO patientDTO) {
+        Patient patient = new Patient();
+        patient.setNom(patientDTO.getNom());
+        patient.setPrenom(patientDTO.getPrenom());
+        patient.setLocalite(patientDTO.getLocalite());
+        patient.setPeriode(patientDTO.getPeriode());
+        patient.setAge(patientDTO.getAge());
+        patient.setEtat(patientDTO.getEtat());
+        patient.setTel(patientDTO.getTel());
+        patient.setSexe(patientDTO.getSexe());
+        patient.setMotpass(patientDTO.getMotPass());
+
+        Set<Maladie> maladies = new HashSet<>();
+        if (patientDTO.getIdMaladies() != null && !patientDTO.getIdMaladies().isEmpty()) {
+            maladies.addAll(maladieRepository.findAllById(patientDTO.getIdMaladies()));
+        }
+        patient.setMaladies(maladies);
+
         return patientService.modifierPatient(id, patient);
     }
 
