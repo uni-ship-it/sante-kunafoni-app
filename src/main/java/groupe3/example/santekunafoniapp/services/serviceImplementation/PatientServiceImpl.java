@@ -85,11 +85,11 @@ public List<Patient> getDerniersPatients() {
 @Override
 public long compterHommes() {
 
-    return patientRepository.countBySexe("Homme");
+    return patientRepository.countBySexe("M");
 }
 
 @Override
 public long compterFemmes() {
-    return patientRepository.countBySexe("Femme");
+    return patientRepository.countBySexe("F");
 }
 }
