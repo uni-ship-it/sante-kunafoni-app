@@ -10,8 +10,7 @@ import java.util.List;
 public interface AdministrateurServiceInterface {
 
 
-    public String ajouter(AdministrateurRequestDTO dto);
-
+    AdministrateurResponseDTO ajouter(AdministrateurRequestDTO dto);
 
     public String modifier(Long id, AdministrateurRequestDTO dto);
 

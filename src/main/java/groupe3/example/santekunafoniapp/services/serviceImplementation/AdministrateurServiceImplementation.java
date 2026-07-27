@@ -32,9 +32,9 @@ public class AdministrateurServiceImplementation
         this.repository = repository;
     }
 
-    @Override
-    public  String ajouter(AdministrateurRequestDTO dto){
 
+    @Override
+    public AdministrateurResponseDTO ajouter(AdministrateurRequestDTO dto){
 
         Administrateur admin = new Administrateur();
 
@@ -43,10 +43,13 @@ public class AdministrateurServiceImplementation
         admin.setEmail(dto.getEmail());
         admin.setTel(dto.getTel());
         admin.setMotpass(dto.getMotpass());
-        admin.setRole(Role.valueOf(dto.getRole()));
 
-        repository.save(admin);
-        return "Admin ajouté avec succès";
+        // un administrateur possède automatiquement le rôle ADMIN
+        admin.setRole(Role.ADMIN);
+
+        Administrateur adminEnregistre = repository.save(admin);
+
+        return convertirEnResponseDTO(adminEnregistre);
     }
 
 
@@ -90,8 +93,6 @@ public class AdministrateurServiceImplementation
         admin.setEmail(dto.getEmail());
         admin.setTel(dto.getTel());
         admin.setMotpass(dto.getMotpass());
-        admin.setRole(Role.valueOf(dto.getRole()));
-
         repository.save(admin);
          return "Mofification réussie";
 

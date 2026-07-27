@@ -32,9 +32,9 @@ public class AdministrateurController {
             }
             )
     @PostMapping
-    public String ajouter(@RequestBody AdministrateurRequestDTO dto){
+    public AdministrateurResponseDTO ajouter(@RequestBody AdministrateurRequestDTO dto){
         administrateurService.ajouter(dto);
-        return "ajouté avec succès";
+        return administrateurService.ajouter(dto);
     }
 
     @Operation(summary = "Afficher Administrateur",

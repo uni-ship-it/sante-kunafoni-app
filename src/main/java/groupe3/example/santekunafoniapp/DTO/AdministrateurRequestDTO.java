@@ -10,6 +10,5 @@ public class AdministrateurRequestDTO {
         private String email;
         private String tel;
         private String motpass;
-        private String role;
     }
 
