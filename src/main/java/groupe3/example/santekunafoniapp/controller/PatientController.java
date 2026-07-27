@@ -43,7 +43,7 @@ public class PatientController {
     })
     @PostMapping
     public Patient ajouterPatient(@RequestBody PatientDTO patientDTO) {
-        System.out.println("mot de passe: "+ patientDTO.getMotpass());
+        System.out.println("mot de passe: "+ patientDTO.getMotPass());
         System.out.println("NOM: "+ patientDTO.getNom());
         System.out.println("prenom: "+ patientDTO.getPrenom());
         Patient patient = new Patient();
