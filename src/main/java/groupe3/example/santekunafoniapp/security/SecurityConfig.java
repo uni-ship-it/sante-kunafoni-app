@@ -18,7 +18,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -40,11 +39,12 @@ public class SecurityConfig {
                                 "/api/patients/**",
                                 "/swagger-ui/**",
 
-
+                                "/api/**", //  Rétablit l'accès public pour le Dashboard Angular
                                 "/api/patients/**",
                                 "/api/administrateurs/**",
 
                                 "/api/agents/**",
+                                "/api/administrateurs/**",
 
                                 "/api/notification/**",
 
@@ -72,7 +72,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
 
     }
-
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration)

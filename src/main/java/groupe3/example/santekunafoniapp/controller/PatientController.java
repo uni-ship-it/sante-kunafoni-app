@@ -1,5 +1,4 @@
 package groupe3.example.santekunafoniapp.controller;
-
 import groupe3.example.santekunafoniapp.DTO.PatientDTO;
 import groupe3.example.santekunafoniapp.Entity.Maladie;
 import groupe3.example.santekunafoniapp.Entity.Patient;
@@ -21,7 +20,7 @@ import java.util.Set;
 @Tag(name = "Patients", description = "Gestion des comptes patients")
 @RestController
 @RequestMapping("/api/patients")
-// @CrossOrigin(origins = "http://localhost:4200") // <--- SUPPRIMÉ pour éviter le conflit avec SecurityConfig
+@CrossOrigin(origins = "http://localhost:4200") // <--- SUPPRIMÉ pour éviter le conflit avec SecurityConfig
 public class PatientController {
 
     private final PatientServiceInterface patientService;
@@ -76,7 +75,24 @@ public class PatientController {
             @ApiResponse(responseCode = "404", description = "Patient non trouvé")
     })
     @PutMapping("/{id}")
-    public Patient modifierPatient(@PathVariable Long id, @RequestBody Patient patient) {
+    public Patient modifierPatient(@PathVariable Long id, @RequestBody PatientDTO patientDTO) {
+        Patient patient = new Patient();
+        patient.setNom(patientDTO.getNom());
+        patient.setPrenom(patientDTO.getPrenom());
+        patient.setLocalite(patientDTO.getLocalite());
+        patient.setPeriode(patientDTO.getPeriode());
+        patient.setAge(patientDTO.getAge());
+        patient.setEtat(patientDTO.getEtat());
+        patient.setTel(patientDTO.getTel());
+        patient.setSexe(patientDTO.getSexe());
+        patient.setMotpass(patientDTO.getMotPass());
+
+        Set<Maladie> maladies = new HashSet<>();
+        if (patientDTO.getIdMaladies() != null && !patientDTO.getIdMaladies().isEmpty()) {
+            maladies.addAll(maladieRepository.findAllById(patientDTO.getIdMaladies()));
+        }
+        patient.setMaladies(maladies);
+
         return patientService.modifierPatient(id, patient);
     }
 
@@ -96,5 +112,29 @@ public class PatientController {
     @GetMapping("/{id}")
     public Patient afficherPatientParId(@PathVariable Long id) {
         return patientService.afficherPatientParId(id);
+    }
+    //  URL correspondante au Service Angular : /api/patients/derniers
+
+    @GetMapping("/derniers")
+    public List<Patient> getDerniersPatients() {
+        return patientService.getDerniersPatients();
+    }
+
+    //  URL correspondante au Service Angular : /api/patients/count
+    @GetMapping("/count")
+    public Long nombrePatients() {
+        return patientService.nombrePatients();
+    }
+
+    //  URL correspondante au Service Angular : /api/patients/hommes
+    @GetMapping("/hommes")
+    public long compterHommes() {
+        return patientService.compterHommes();
+    }
+
+    //  URL correspondante au Service Angular : /api/patients/femmes
+    @GetMapping("/femmes")
+    public long compterFemmes() {
+        return patientService.compterFemmes();
     }
 }

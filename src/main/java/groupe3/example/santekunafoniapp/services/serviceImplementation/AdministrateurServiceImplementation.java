@@ -1,6 +1,5 @@
 package groupe3.example.santekunafoniapp.services.serviceImplementation;
 
-
 import groupe3.example.santekunafoniapp.DTO.AdministrateurRequestDTO;
 import groupe3.example.santekunafoniapp.DTO.AdministrateurResponseDTO;
 import groupe3.example.santekunafoniapp.Entity.Administrateur;
@@ -8,33 +7,30 @@ import groupe3.example.santekunafoniapp.Entity.Role;
 import groupe3.example.santekunafoniapp.Repository.AdministrateurRepository;
 import groupe3.example.santekunafoniapp.services.serviceInterface.AdministrateurServiceInterface;
 
-
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-
 import java.util.List;
-
 
 @Service
 public class AdministrateurServiceImplementation
         implements AdministrateurServiceInterface {
 
-
     private final AdministrateurRepository repository;
-
-
+    private final PasswordEncoder passwordEncoder;
 
     public AdministrateurServiceImplementation(
-            AdministrateurRepository repository){
+            AdministrateurRepository repository, PasswordEncoder passwordEncoder){
 
         this.repository = repository;
+        //awa
+        this.passwordEncoder = passwordEncoder;
     }
 
-
     @Override
-    public AdministrateurResponseDTO ajouter(AdministrateurRequestDTO dto){
+    public String ajouter(AdministrateurRequestDTO dto){
 
         Administrateur admin = new Administrateur();
 
@@ -42,35 +38,33 @@ public class AdministrateurServiceImplementation
         admin.setPrenom(dto.getPrenom());
         admin.setEmail(dto.getEmail());
         admin.setTel(dto.getTel());
-        admin.setMotpass(dto.getMotpass());
 
-        // un administrateur possède automatiquement le rôle ADMIN
+        // Hachage du mot de passe et attribution automatique du rôle Admin by awa
+        if (dto.getMotpass() != null && !dto.getMotpass().isEmpty()){
+            admin.setMotpass(passwordEncoder.encode(dto.getMotpass()));
+        }
+
         admin.setRole(Role.ADMIN);
 
-        Administrateur adminEnregistre = repository.save(admin);
-
-        return convertirEnResponseDTO(adminEnregistre);
+        repository.save(admin);
+        return "Administrateur ajouté avec succès !";
     }
-
 
     @Override
     public AdministrateurResponseDTO afficherParId(Long id){
 
         Administrateur admin =
                 repository.findById(id)
-                        .orElseThrow(() ->new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Administrateur introuvable"
-        )
-                        );
+                        .orElseThrow(() -> new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Administrateur introuvable"
+                        ));
         return convertirEnResponseDTO(admin);
     }
 
     @Override
     public List<AdministrateurResponseDTO> afficherTous(){
-
-
-         return repository.findAll()
+        return repository.findAll()
                 .stream()
                 .map(this::convertirEnResponseDTO)
                 .toList();
@@ -92,10 +86,13 @@ public class AdministrateurServiceImplementation
         admin.setPrenom(dto.getPrenom());
         admin.setEmail(dto.getEmail());
         admin.setTel(dto.getTel());
-        admin.setMotpass(dto.getMotpass());
-        repository.save(admin);
-         return "Mofification réussie";
 
+        if (dto.getMotpass() != null && !dto.getMotpass().isEmpty()){
+            admin.setMotpass(passwordEncoder.encode(dto.getMotpass()));
+        }
+
+        repository.save(admin);
+        return "Modification réussie";
     }
 
     @Override
@@ -108,10 +105,8 @@ public class AdministrateurServiceImplementation
                                 "Administrateur introuvable"));
 
         repository.delete(admin);
-        return "La Suppression a été affectué avec succès";
-
+        return "La suppression a été effectuée avec succès";
     }
-
 
     private AdministrateurResponseDTO convertirEnResponseDTO(Administrateur admin){
         AdministrateurResponseDTO dto = new AdministrateurResponseDTO();
@@ -127,7 +122,5 @@ public class AdministrateurServiceImplementation
         }
 
         return dto;
-
     }
-
 }

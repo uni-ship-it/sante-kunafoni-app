@@ -37,7 +37,7 @@ public class SymptomeServiceImplementation implements SymptomeServiceInterface {
     @Override
     public Symptome updateSymptomeById(Long id, Symptome symptome) {
         Symptome ancien=repository.findById(id)
-        .orElseThrow(()-> new RuntimeException("Symptôme introuvable"));
+                .orElseThrow(()-> new RuntimeException("Symptôme introuvable"));
         ancien.setNom(symptome.getNom());
         ancien.setDescription(symptome.getDescription());
         return repository.save(ancien);

@@ -30,6 +30,14 @@ public class NotificationController {
         return service.getAllNotifications();
     }
 
+    // ── GET NOTIFICATIONS SYSTÈME (AJOUTÉ) ────────────────────
+    @Operation(summary = "Lister les notifications système (globales)")
+    @ApiResponse(responseCode = "200", description = "Liste des notifications système retournée")
+    @GetMapping("/systeme")
+    public List<Notification> getNotificationsSysteme() {
+        return service.getNotificationsSysteme();
+    }
+
     // ── GET PAR UTILISATEUR ───────────────────────────────────
     @Operation(summary = "Lister les notifications d'un utilisateur")
     @GetMapping("/utilisateur/{userId}")
@@ -55,6 +63,18 @@ public class NotificationController {
             return ResponseEntity.status(404).body(e.getMessage());
         }
     }
+
+    // MÉTHODE DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> supprimerNotification(@PathVariable Long id) {
+        try {
+            service.supprimerNotification(id);
+            return ResponseEntity.ok("Notification supprimée avec succès.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
 
     // ── POST VÉRIFICATION ÉPIDÉMIE AUTOMATIQUE ────────────────
     @Operation(summary = "Vérifier le risque d'épidémie")

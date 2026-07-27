@@ -19,7 +19,6 @@ public class NotificationServiceImplementation implements NotificationServiceInt
     private final TraitementRepository traitementRepository;
     private final MaladieRepository maladieRepository;
 
-    // Seuil : 30 cas en 7 jours = épidémie possible
     private static final int SEUIL_EPIDEMIE = 30;
     private static final int PERIODE_JOURS  = 7;
 
@@ -32,62 +31,80 @@ public class NotificationServiceImplementation implements NotificationServiceInt
         this.maladieRepository    = maladieRepository;
     }
 
-    // ── NOTIFICATION ORDINAIRE ────────────────────────────────
-    // Envoyée manuellement par un agent ou admin
-    // datePublication est automatiquement définie à maintenant
+    // ============================================================
+    // 1. NOTIFICATION ORDINAIRE
+    // ============================================================
     @Override
     public Notification envoyerNotification(Notification notif) {
         notif.setDatePublication(LocalDateTime.now());
+        notif.setLue(false);
         return repository.save(notif);
     }
 
-    // ── RÉCUPÉRATION ─────────────────────────────────────────
+    // ============================================================
+    // 2. RÉCUPÉRATION
+    // ============================================================
     @Override
     public List<Notification> getAllNotifications() {
-        return repository.findAll();
+        return repository.findAllByOrderByDatePublicationDesc();
     }
 
     @Override
     public List<Notification> getNotificationsByUtilisateur(Long userId) {
-        return repository.findByUtilisateur_IdUtilisateur(userId);
+        return repository.findByUtilisateur_IdUtilisateurOrderByDatePublicationDesc(userId);
     }
 
-    // ── MARQUER COMME LUE ────────────────────────────────────
+    @Override
+    public List<Notification> getNotificationsSysteme() {
+        return repository.findByUtilisateurIsNullOrderByDatePublicationDesc();
+    }
+
+    // ============================================================
+    // 3. MARQUER COMME LUE
+    // ============================================================
     @Override
     public void marquerCommeLue(Long id) {
         Notification notif = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Notification non trouvée"));
+                .orElseThrow(() -> new RuntimeException("Notification non trouvée avec l'ID : " + id));
         notif.setLue(true);
         repository.save(notif);
     }
 
-    // ── ALERTE AUTOMATIQUE ÉPIDÉMIE ──────────────────────────
-    // Condition : nombre de Traitement liés à cette Maladie
-    // avec datedebut >= aujourd'hui - 7 jours > 30
-    // Si condition remplie → crée automatiquement une Notification
-    // Si condition non remplie → ne fait rien
+    // ============================================================
+    // 4. ALERTE AUTOMATIQUE ÉPIDÉMIE
+    // ============================================================
     @Override
     public void verifierEpidemie(Long idMaladie) {
 
-        // 1. Vérifie que la maladie existe
         Maladie maladie = maladieRepository.findById(idMaladie)
-                .orElseThrow(() -> new RuntimeException("Maladie non trouvée"));
+                .orElseThrow(() -> new RuntimeException("Maladie non trouvée avec l'ID : " + idMaladie));
 
-        // 2. Fenêtre glissante : les 7 derniers jours
         LocalDate dateDebutPeriode = LocalDate.now().minusDays(PERIODE_JOURS);
 
-        // 3. Compte les cas enregistrés via les Traitement
         long nombreCas = traitementRepository.countCasParMaladieDepuis(
                 idMaladie,
                 dateDebutPeriode
         );
 
-        // 4. CONDITION PRINCIPALE : seuil dépassé ?
         if (nombreCas > SEUIL_EPIDEMIE) {
 
-            // 5. Crée automatiquement la notification d'alerte
+            // ✅ VÉRIFIER SI UNE ALERTE EXISTE DÉJÀ (dans les dernières 24h)
+            boolean alerteExistante = repository
+                    .findByTitreAndDatePublicationAfter(
+                            "Alerte épidémie possible",
+                            LocalDateTime.now().minusHours(24)
+                    )
+                    .stream()
+                    .anyMatch(n -> n.getMessage().contains(maladie.getNom()));
+
+            if (alerteExistante) {
+                System.out.println("Alerte déjà envoyée pour : " + maladie.getNom() + " (ignoré)");
+                return;  // ✅ Ne pas créer de doublon
+            }
+
+            // Créer une NOUVELLE alerte (UNIQUEMENT si pas de doublon)
             Notification alerte = new Notification();
-            alerte.setTitre("⚠️ Alerte épidémie possible");
+            alerte.setTitre("Alerte épidémie possible");
             alerte.setMessage(String.format(
                     "Risque d'épidémie détecté pour la maladie '%s' : " +
                             "%d cas enregistrés ces %d derniers jours. " +
@@ -99,11 +116,23 @@ public class NotificationServiceImplementation implements NotificationServiceInt
             ));
             alerte.setDatePublication(LocalDateTime.now());
             alerte.setLue(false);
-            // Pas d'utilisateur assigné → alerte globale système
             alerte.setUtilisateur(null);
 
             repository.save(alerte);
+            System.out.println("✅ [NOUVELLE ALERTE] Alerte épidémie créée pour : " + maladie.getNom());
+        } else {
+            System.out.println("Pas d'alerte pour : " + maladie.getNom() +
+                    " (" + nombreCas + " cas < " + SEUIL_EPIDEMIE + ")");
         }
-        // Si nombreCas <= 30 → rien, pas de notification créée
+    }
+
+    // SUPPRIMER UNE NOTIFICATION
+
+    @Override
+    public void supprimerNotification(Long id) {
+        Notification notif = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Notification non trouvée avec l'ID : " + id));
+        repository.delete(notif);
+        System.out.println("Notification supprimée : ID " + id);
     }
 }

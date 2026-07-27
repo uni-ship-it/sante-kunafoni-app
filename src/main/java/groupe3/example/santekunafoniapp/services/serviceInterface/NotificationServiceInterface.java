@@ -11,10 +11,14 @@ public interface NotificationServiceInterface {
     // Récupération
     List<Notification> getAllNotifications();
     List<Notification> getNotificationsByUtilisateur(Long userId);
+    List<Notification> getNotificationsSysteme();  // ✅ Notifications système
 
     // Marquer comme lue
     void marquerCommeLue(Long id);
 
     // Alerte automatique — déclenché quand seuil 30 cas / 7 jours dépassé
     void verifierEpidemie(Long idMaladie);
+
+    // Supprimer une notification
+    void supprimerNotification(Long id);
 }
