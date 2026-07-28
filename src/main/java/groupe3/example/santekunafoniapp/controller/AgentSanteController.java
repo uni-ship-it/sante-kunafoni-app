@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -89,11 +90,11 @@ public class AgentSanteController {
             @ApiResponse(responseCode = "404", description = "Agent non trouvé")
     })
     @DeleteMapping("/{id}")
-    public String supprimerAgent(
+    public ResponseEntity<Void> supprimerAgent(
             @Parameter(description = "ID de l'agent à supprimer", required = true)
             @PathVariable Long id
     ) {
         service.supprimerAgent(id);
-        return "Agent supprimé avec succès";
+        return ResponseEntity.noContent().build();
     }
 }
