@@ -21,7 +21,7 @@ public class PatientDTO {
     // Cette annotation dit à Spring : "Si le front t'envoie 'motpass', mets-le ici"
     // Tout en gardant la variable 'motPass' intacte pour le reste du code Java !
     @JsonProperty("motpass")
-    private String motPass;
+    private String motpass;
 
     private String localite;
     private Long age;

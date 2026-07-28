@@ -42,11 +42,11 @@ public class PatientController {
     })
     @PostMapping
     public Patient ajouterPatient(@RequestBody PatientDTO patientDTO) {
-        System.out.println("mot de passe: "+ patientDTO.getMotPass());
+        System.out.println("mot de passe: "+ patientDTO.getMotpass());
         System.out.println("NOM: "+ patientDTO.getNom());
         System.out.println("prenom: "+ patientDTO.getPrenom());
         Patient patient = new Patient();
-        patient.setMotpass(patientDTO.getMotPass());
+        patient.setMotpass(patientDTO.getMotpass());
         patient.setNom(patientDTO.getNom());
         patient.setPrenom(patientDTO.getPrenom());
         patient.setLocalite(patientDTO.getLocalite());
@@ -85,7 +85,7 @@ public class PatientController {
         patient.setEtat(patientDTO.getEtat());
         patient.setTel(patientDTO.getTel());
         patient.setSexe(patientDTO.getSexe());
-        patient.setMotpass(patientDTO.getMotPass());
+        patient.setMotpass(patientDTO.getMotpass());
 
         Set<Maladie> maladies = new HashSet<>();
         if (patientDTO.getIdMaladies() != null && !patientDTO.getIdMaladies().isEmpty()) {
