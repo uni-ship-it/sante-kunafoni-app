@@ -30,7 +30,7 @@ public class AdministrateurServiceImplementation
     }
 
     @Override
-    public String ajouter(AdministrateurRequestDTO dto){
+    public AdministrateurResponseDTO ajouter(AdministrateurRequestDTO dto){
 
         Administrateur admin = new Administrateur();
 
@@ -46,9 +46,9 @@ public class AdministrateurServiceImplementation
 
         admin.setRole(Role.ADMIN);
 
-        repository.save(admin);
-        return "Administrateur ajouté avec succès !";
-    }
+        Administrateur savedAdmin = repository.save(admin);
+
+        return convertirEnResponseDTO(savedAdmin);    }
 
     @Override
     public AdministrateurResponseDTO afficherParId(Long id){
