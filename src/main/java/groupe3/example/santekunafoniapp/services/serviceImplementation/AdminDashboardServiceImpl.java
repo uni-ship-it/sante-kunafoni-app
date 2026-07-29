@@ -55,4 +55,4 @@ public class AdminDashboardServiceImpl implements AdminDashboardServiceInterface
 
         return new DashboardStatsDTO(totalAgents, totalPatients, totalNotifications, graphe);
     }
-}
+    }
