@@ -8,6 +8,7 @@ import groupe3.example.santekunafoniapp.services.serviceInterface.AdminDashboard
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,19 +22,37 @@ public class AdminDashboardServiceImpl implements AdminDashboardServiceInterface
     //implemenation de l'interface
     @Override
     public DashboardStatsDTO getDashboardStatsDTO() {
-        // 1. Récupération des compteurs principaux
         long totalAgents = agentSanteRepository.count();
         long totalPatients = patientRepository.count();
         long totalNotifications = notificationRepository.count();
 
-        // 2. Préparation des données du graphique d'alertes
-        List<String> mois = List.of("Jan", "Fév", "Mar", "Avr", "Mai", "Juin");
-        List<Long> valeursAlertes = List.of(12L, 25L, 18L, 32L, 20L, 40L);
+        // 1. Récupération des données réelles enregistrées en BDD
+        List<Object[]> resultats = notificationRepository.compterNotificationsParMois();
 
-        // 3. Instanciation de la classe interne de votre DTO regroupé
-        DashboardStatsDTO.ChartDataDTO graphe = new DashboardStatsDTO.ChartDataDTO(
-                mois, valeursAlertes);
-        // 4. Renvoi du DTO complet
+        List<String> labels = new ArrayList<>();
+        List<Long> donnees = new ArrayList<>();
+
+        // Tableau pour convertir les numéros de mois (1, 2, 3...) en texte
+        String[] nomsMois = {"Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sep", "Oct", "Nov", "Déc"};
+
+        // 2. Traitement des résultats de la BDD
+        for (Object[] ligne : resultats) {
+            int numeroMois = ((Number) ligne[0]).intValue(); // ex: 1 pour Janvier
+            long totalAlerte = ((Number) ligne[1]).longValue(); // ex: 15 notifications
+
+            labels.add(nomsMois[numeroMois - 1]);
+            donnees.add(totalAlerte);
+        }
+
+        // Si aucune notification n'existe encore en BDD, on met une valeur par défaut pour éviter un graphe vide
+        if (labels.isEmpty()) {
+            labels.add("Aucune donnée");
+            donnees.add(0L);
+        }
+
+        // 3. Instanciation du DTO regroupé avec données dynamiques
+        DashboardStatsDTO.ChartDataDTO graphe = new DashboardStatsDTO.ChartDataDTO(labels, donnees);
+
         return new DashboardStatsDTO(totalAgents, totalPatients, totalNotifications, graphe);
     }
 }
